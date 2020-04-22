@@ -33,3 +33,6 @@
 
 [Dd]ebug
 [Rr]elease
+.vs
+/Engine/FramebufferPS.shh
+/Engine/FramebufferVS.shh
