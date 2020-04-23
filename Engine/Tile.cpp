@@ -97,3 +97,8 @@ VectorPosition_t* Tile::GetCurrentLocationPtr()
 {
     return &this->current_location;
 }
+
+const VectorPosition_t& Tile::GetLocation() const
+{
+    return current_location;
+}

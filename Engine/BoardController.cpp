@@ -95,6 +95,21 @@ void BoardController::StoreTile(void* tile)
     Board[position->x][position->y] = tile;
 }
 
+void BoardController::ClearBoard()
+{
+    for (int x = 0; x < BOARD_WIDTH_IN_RECTANGLES; x++)
+    {
+        for (int y = 0; y < BOARD_HEIGHT_IN_RECTANGLES; y++)
+        {
+            if (Board[x][y] != nullptr)
+            {
+                delete Board[x][y];
+                Board[x][y] = nullptr;
+            }
+        }
+    }
+}
+
 bool BoardController::LocationIsOccupied(int x, int y) const
 {
     return (Board[x][y] != nullptr);

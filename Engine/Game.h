@@ -59,5 +59,7 @@ private:
 
     int move_down_speed = 60;
     int frames_counter = 0;
+
+    bool is_game_over = false;
 	/********************************/
 };

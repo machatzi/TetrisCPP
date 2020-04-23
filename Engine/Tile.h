@@ -17,6 +17,7 @@ public:
     void MoveToNewLocation();
     void RootMe();
     VectorPosition_t* GetCurrentLocationPtr();
+    const VectorPosition_t& GetLocation() const;
 private:
     Graphics& gfx;
     BoardController& boardController;

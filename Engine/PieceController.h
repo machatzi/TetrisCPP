@@ -27,29 +27,30 @@ typedef struct SpawningProperties_s {
     bool center_rotation_tile = false;
 } SpawningProperties_t;
 
-typedef struct Piece_s {
-    PieceShape piece_type;
-    int current_rotation_indx = 0;
-    const OffsetData_t* offset_data;
-    Tile* tiles[TETRAMINO_NUMBER_OF_TILES] = { 0 };
-    VectorPosition_t* centered_tile_location = NULL;
-
-} Piece_t;
-
 class PieceController
 {
+private:
+    class Piece {
+    public:
+        ~Piece();
+        PieceShape piece_type;
+        int current_rotation_indx = 0;
+        const OffsetData_t* offset_data;
+        Tile* tiles[TETRAMINO_NUMBER_OF_TILES] = { 0 };
+        VectorPosition_t* centered_tile_location = NULL;
+    };
+
 public:
     PieceController(Graphics& gfx, BoardController& boardController);
-    void SpawnNextPiece();
+    void Init();
+    bool SpawnNextPiece();
     void DrawPiece() const;
     void MovePiece(MoveDirection direction);
     void RootPiece();
-    bool hasActivePiece();
     void RotatePiece(bool rotate_clockwise);
 private:
-    Piece_t* active_piece = NULL;
-    Piece_t* next_piece = NULL;
-    bool has_active_piece = false;
+    Piece* active_piece = NULL;
+    Piece* next_piece = NULL;
 
     Graphics& gfx;
     BoardController& boardController;
@@ -62,6 +63,7 @@ private:
     void GenerateNextPiece();
     void ResetPiece();
     void MovePieceToNewLocation();
+    bool PieceCanBePlacedOnBoard();
 
     const SpawningProperties_t spawn_positions[7][4] = {
         { { 3, 1 },

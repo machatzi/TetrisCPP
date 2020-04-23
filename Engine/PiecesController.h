@@ -9,7 +9,8 @@ class PiecesController
 public:
     PiecesController(Graphics& gfx, BoardController& boardController);
 
-    void SpawnNewPiece();
+    void Init();
+    bool SpawnNewPiece();
     void DrawPiece();
     void MovePiece(MoveDirection direction);
     void RootPiece(); //Send piece on the bottom

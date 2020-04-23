@@ -10,6 +10,7 @@ public:
     void DrawBoard();
     bool MoveIsPossible(int x, int y) const;
     void StoreTile(void* tile);
+    void ClearBoard();
 private:
     void* Board[BOARD_WIDTH_IN_RECTANGLES][BOARD_HEIGHT_IN_RECTANGLES] = { nullptr };
     

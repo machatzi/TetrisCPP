@@ -10,40 +10,32 @@ PiecesController::PiecesController(Graphics& gfx, BoardController& boardControll
     curPieceController = new PieceController(gfx, boardController);
 }
 
-void PiecesController::SpawnNewPiece()
+void PiecesController::Init()
 {
-    if (!curPieceController->hasActivePiece())
-    {
-        curPieceController->SpawnNextPiece();
-    }
+    curPieceController->Init();
+}
+
+bool PiecesController::SpawnNewPiece()
+{
+    return curPieceController->SpawnNextPiece();
 }
 
 void PiecesController::DrawPiece()
 {
-    if (curPieceController->hasActivePiece())
-        curPieceController->DrawPiece();
+     curPieceController->DrawPiece();
 }
 
 void PiecesController::MovePiece(MoveDirection direction)
 {
-    if (curPieceController->hasActivePiece())
-    {
-        curPieceController->MovePiece(direction);
-    }
+    curPieceController->MovePiece(direction);
 }
 
 void PiecesController::RootPiece()
 {
-    if (curPieceController->hasActivePiece())
-    {
-        curPieceController->RootPiece();
-    }
+    curPieceController->RootPiece();
 }
 
 void PiecesController::RotatePiece(bool rotate_clockwise)
 {
-    if (curPieceController->hasActivePiece())
-    {
-        curPieceController->RotatePiece(rotate_clockwise);
-    }
+    curPieceController->RotatePiece(rotate_clockwise);
 }

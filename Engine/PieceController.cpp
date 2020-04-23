@@ -1,5 +1,6 @@
 #include "PieceController.h"
 
+
 PieceController::PieceController(Graphics& gfx, BoardController& boardController)
     :
     gfx (gfx),
@@ -7,8 +8,25 @@ PieceController::PieceController(Graphics& gfx, BoardController& boardController
 {
 }
 
-void PieceController::SpawnNextPiece()
+void PieceController::Init()
 {
+    if (next_piece)
+    {
+        delete next_piece;
+        next_piece = NULL;
+    }
+    if (active_piece)
+    {
+        delete active_piece;
+        active_piece = NULL;
+    }
+}
+
+bool PieceController::SpawnNextPiece()
+{
+    if (active_piece)
+        return true;
+
     if (next_piece == NULL) //This can only happen in beginning of game
     {
         GenerateNextPiece();
@@ -16,15 +34,20 @@ void PieceController::SpawnNextPiece()
     active_piece = next_piece;
     next_piece = NULL;
 
+    if (!PieceCanBePlacedOnBoard())
+    {
+        return false;
+    }
+
     GenerateNextPiece();
 
     UpdateActivePieceLandingLocation();
-    this->has_active_piece = true;
+    return true;
 }
 
 void PieceController::GenerateNextPiece()
 {
-    next_piece = new Piece_t();
+    next_piece = new Piece();
 
     next_piece->piece_type = static_cast<PieceShape>(rand() % static_cast<int>(PieceShape::NUMBER_OF_SHAPES));
     
@@ -66,8 +89,26 @@ void PieceController::MovePieceToNewLocation()
     UpdateActivePieceLandingLocation();
 }
 
+bool PieceController::PieceCanBePlacedOnBoard()
+{
+    for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
+    {
+        if (active_piece->tiles[i])
+        {
+            const VectorPosition_t& tile_location = active_piece->tiles[i]->GetLocation();
+            if (!boardController.MoveIsPossible(tile_location.x, tile_location.y))
+                return false;
+        }
+    }
+
+    return true;
+}
+
 void PieceController::DrawPiece() const
 {
+    if (active_piece == NULL)
+        return;
+
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
         if (active_piece->tiles[i])
@@ -79,6 +120,9 @@ void PieceController::DrawPiece() const
 
 void PieceController::MovePiece(MoveDirection direction)
 {
+    if (active_piece == NULL)
+        return;
+
     int x_offset = 0;
     int y_offset = 0;
 
@@ -116,6 +160,9 @@ void PieceController::MovePiece(MoveDirection direction)
 
 void PieceController::RootPiece()
 {
+    if (active_piece == NULL)
+        return;
+
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
         active_piece->tiles[i]->RootMe();
@@ -123,13 +170,11 @@ void PieceController::RootPiece()
     StorePieceToBoard();
 }
 
-bool PieceController::hasActivePiece()
-{
-    return has_active_piece;
-}
-
 void PieceController::RotatePiece(bool rotate_clockwise)
 {
+    if (active_piece == NULL)
+        return;
+
     for (int i = 1; i < NUMBER_OF_POSSIBLE_ROTATIONS; i++)
     {
         int next_rotation_indx = (((rotate_clockwise) ? (active_piece->current_rotation_indx + i) : (active_piece->current_rotation_indx - i)) + NUMBER_OF_POSSIBLE_ROTATIONS) % NUMBER_OF_POSSIBLE_ROTATIONS;
@@ -225,5 +270,13 @@ void PieceController::StorePieceToBoard()
     active_piece->centered_tile_location = NULL;
     delete active_piece;
     active_piece = NULL;
-    has_active_piece = false;
+}
+
+PieceController::Piece::~Piece()
+{
+    for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
+    {
+        if (tiles[i])
+            delete tiles[i];
+    }
 }

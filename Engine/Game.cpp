@@ -34,8 +34,6 @@ Game::Game( MainWindow& wnd )
 
 void Game::Go()
 {
-    piecesController->SpawnNewPiece();
-
 	gfx.BeginFrame();	
 	UpdateModel();
 	ComposeFrame();
@@ -44,7 +42,32 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+    if (is_game_over)
+    {
+        if (wnd.kbd.KeyIsPressed(VK_SPACE)) //New Game
+        {
+            if (vkspace_was_released)
+            {
+                boardController.ClearBoard();
+                piecesController->Init();
+                is_game_over = false;
+                vkspace_was_released = false;
+            }
+        }
+        else
+        {
+            vkspace_was_released = true;
+        }
+        return;
+    }
+
     boardController.ClearCompleteLines();
+
+    if (!piecesController->SpawnNewPiece())
+    {
+        is_game_over = true;
+        return;
+    }
 
     frames_counter++;
     if (frames_counter == move_down_speed)
@@ -135,6 +158,10 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-    piecesController->DrawPiece();
     boardController.DrawBoard();
+    piecesController->DrawPiece();
+    if (is_game_over)
+    {
+        //to implement game over graphics
+    }
 }
