@@ -160,12 +160,12 @@ private:
 
     const Color ShapeInitColors[7] = {
         Colors::Blue,
-        Colors::Yellow,
+        Colors::Orange,
         Colors::Green,
         Colors::Magenta,
         Colors::Red,
         Colors::Cyan,
-        Colors::LightGray
+        Colors::Yellow
     };
 };
 
