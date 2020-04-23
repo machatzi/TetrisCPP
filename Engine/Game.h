@@ -43,6 +43,11 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
 
+	/********************************/
+	/*  User Variables              */
+    BoardController boardController;
+    PiecesController* piecesController = NULL;
+
     bool vkleft_was_released = true;
     bool vkright_was_released = true;
     bool vkspace_was_released = true;
@@ -52,9 +57,7 @@ private:
     bool z_was_released = true;
     bool x_was_released = true;
 
-	/********************************/
-	/*  User Variables              */
-    BoardController boardController;
-    PiecesController* piecesController = NULL;
+    int move_down_speed = 60;
+    int frames_counter = 0;
 	/********************************/
 };

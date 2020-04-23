@@ -46,6 +46,13 @@ void Game::UpdateModel()
 {
     boardController.ClearCompleteLines();
 
+    frames_counter++;
+    if (frames_counter == move_down_speed)
+    {
+        frames_counter = 0;
+        piecesController->MovePiece(MoveDirection::DOWN);
+    }
+
     if (wnd.kbd.KeyIsPressed(VK_DOWN))
     {
         if (vkdown_was_released)
