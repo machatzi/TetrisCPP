@@ -26,7 +26,7 @@
 #include "BoardController.h"
 #include "PiecesController.h"
 #include "Common.h"
-
+#include "FrameTimer.h"
 
 class Game
 {
@@ -52,7 +52,8 @@ private:
     const VectorPosition_t board_offset_location = { 10, 10 };
     BoardController boardController;
     PiecesController* piecesController = NULL;
-    
+    FrameTimer ft;
+
     int board_width_in_pixels;
     int board_height_in_pixels;
     int board_square_length_in_pixels = 30;
@@ -67,8 +68,9 @@ private:
     bool x_was_released         = true;
     /********************************/
 
-    int move_down_speed = 60;
-    int frames_counter = 0;
+    float move_down_speed = 1.6f;
+    float time_passed = 0.0f;
+    float move_down_speed_min = 0.3f;
 
     bool is_game_over = false;
 	/********************************/

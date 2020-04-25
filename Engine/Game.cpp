@@ -45,7 +45,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-    
+    auto dt = ft.Mark();
+
     if (is_game_over)
     {
         if (wnd.kbd.KeyIsPressed(VK_SPACE)) //New Game
@@ -73,11 +74,12 @@ void Game::UpdateModel()
         return;
     }
 
-    frames_counter++;
-    if (frames_counter == move_down_speed)
+    time_passed += dt;
+    if (time_passed >= move_down_speed)
     {
-        frames_counter = 0;
+        time_passed -= move_down_speed;
         piecesController->MovePiece(MoveDirection::DOWN);
+        move_down_speed = std::max(move_down_speed - dt, move_down_speed_min);
     }
 
     if (wnd.kbd.KeyIsPressed(VK_DOWN))
