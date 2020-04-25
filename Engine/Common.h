@@ -1,8 +1,5 @@
 #pragma once
 
-#define BOARD_WIDTH_IN_RECTANGLES 10
-#define BOARD_HEIGHT_IN_RECTANGLES 20
-
 enum class MoveDirection {
     RIGHT = 0,
     LEFT,

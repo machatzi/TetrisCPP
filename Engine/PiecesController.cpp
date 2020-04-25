@@ -22,7 +22,8 @@ bool PiecesController::SpawnNewPiece()
 
 void PiecesController::DrawPiece()
 {
-     curPieceController->DrawPiece();
+     curPieceController->DrawActivePiece();
+     curPieceController->DrawNextPieces();
 }
 
 void PiecesController::MovePiece(MoveDirection direction)

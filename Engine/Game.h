@@ -25,6 +25,8 @@
 #include "Graphics.h"
 #include "BoardController.h"
 #include "PiecesController.h"
+#include "Common.h"
+
 
 class Game
 {
@@ -40,22 +42,30 @@ private:
 	/*  User Functions              */
 	/********************************/
 private:
+    void DrawBorders();
+
 	MainWindow& wnd;
 	Graphics gfx;
 
 	/********************************/
 	/*  User Variables              */
+    const VectorPosition_t board_offset_location = { 10, 10 };
     BoardController boardController;
     PiecesController* piecesController = NULL;
+    
+    int board_width_in_pixels;
+    int board_height_in_pixels;
+    int board_square_length_in_pixels = 30;
 
-    bool vkleft_was_released = true;
-    bool vkright_was_released = true;
-    bool vkspace_was_released = true;
-    bool vkdown_was_released = true;
-    bool vkup_was_released = true;
-
-    bool z_was_released = true;
-    bool x_was_released = true;
+    /* Buttons flags */
+    bool vkleft_was_released    = true;
+    bool vkright_was_released   = true;
+    bool vkspace_was_released   = true;
+    bool vkdown_was_released    = true;
+    bool vkup_was_released      = true;
+    bool z_was_released         = true;
+    bool x_was_released         = true;
+    /********************************/
 
     int move_down_speed = 60;
     int frames_counter = 0;

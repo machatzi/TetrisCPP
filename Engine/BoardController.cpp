@@ -1,13 +1,26 @@
 #include "BoardController.h"
 #include "Tile.h"
 
-BoardController::BoardController()
+BoardController::BoardController(VectorPosition_t board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels)
+    :
+    board_offset_location (board_offset_location),
+    board_width_in_rectangles (board_width_in_rectangles),
+    board_height_in_rectangles (board_height_in_rectangles),
+    board_square_length_in_pixels (board_square_length_in_pixels)
 {
+    Board = new void** [board_width_in_rectangles];
+    for (int i = 0; i < board_width_in_rectangles; ++i) {
+        Board[i] = new void*[board_height_in_rectangles];
+    }
+
+    for (int i = 0; i < board_width_in_rectangles; i++)
+        for (int z = 0; z < board_height_in_rectangles; z++)
+            Board[i][z] = nullptr;
 }
 
 void BoardController::ClearCompleteLines()
 {
-    for (int y = BOARD_HEIGHT_IN_RECTANGLES - 1; y >= 0; y--)
+    for (int y = board_height_in_rectangles - 1; y >= 0; y--)
     {
         if (LineIsEmpty(y))
             break;
@@ -23,7 +36,7 @@ void BoardController::ClearCompleteLines()
 
 bool BoardController::LineIsEmpty(int y_indx) const
 {
-    for (int x = 0; x < BOARD_WIDTH_IN_RECTANGLES; x++)
+    for (int x = 0; x < board_width_in_rectangles; x++)
     {
         if (Board[x][y_indx] != nullptr)
         {
@@ -35,7 +48,7 @@ bool BoardController::LineIsEmpty(int y_indx) const
 
 bool BoardController::LineIsComplete(int y_indx) const
 {
-    for (int x = 0; x < BOARD_WIDTH_IN_RECTANGLES; x++)
+    for (int x = 0; x < board_width_in_rectangles; x++)
     {
         if (Board[x][y_indx] == nullptr)
         {
@@ -47,7 +60,7 @@ bool BoardController::LineIsComplete(int y_indx) const
 
 void BoardController::RemoveLine(int y_indx)
 {
-    for (int x = 0; x < BOARD_WIDTH_IN_RECTANGLES; x++)
+    for (int x = 0; x < board_width_in_rectangles; x++)
     {
         delete Board[x][y_indx];
         Board[x][y_indx] = nullptr;
@@ -58,7 +71,7 @@ void BoardController::ShiftLinesDown(int y_indx)
 {
     for (int y = y_indx - 1; y >= 0 ; y--)
     {
-        for (int x = 0; x < BOARD_WIDTH_IN_RECTANGLES; x++)
+        for (int x = 0; x < board_width_in_rectangles; x++)
         {
             Board[x][y + 1] = Board[x][y];
 
@@ -71,14 +84,14 @@ void BoardController::ShiftLinesDown(int y_indx)
     }
 }
 
-void BoardController::DrawBoard()
+void BoardController::DrawBoard( Graphics& gfx )
 {
-    for (int x = 0; x < BOARD_WIDTH_IN_RECTANGLES; x++)
+    for (int x = 0; x < board_width_in_rectangles; x++)
     {
-        for (int y = 0; y < BOARD_HEIGHT_IN_RECTANGLES; y++)
+        for (int y = 0; y < board_height_in_rectangles; y++)
         {
             if (Board[x][y] != nullptr)
-                static_cast<Tile*>(Board[x][y])->DrawMe(false);
+                static_cast<Tile*>(Board[x][y])->DrawMe(false, board_offset_location.x, board_offset_location.y);
         }
     }
 }
@@ -97,9 +110,9 @@ void BoardController::StoreTile(void* tile)
 
 void BoardController::ClearBoard()
 {
-    for (int x = 0; x < BOARD_WIDTH_IN_RECTANGLES; x++)
+    for (int x = 0; x < board_width_in_rectangles; x++)
     {
-        for (int y = 0; y < BOARD_HEIGHT_IN_RECTANGLES; y++)
+        for (int y = 0; y < board_height_in_rectangles; y++)
         {
             if (Board[x][y] != nullptr)
             {
@@ -110,6 +123,12 @@ void BoardController::ClearBoard()
     }
 }
 
+const VectorPosition_t& BoardController::GetPieceOffset(int indx) const
+{
+    // TODO: insert return statement here
+    return pieces_offset_location[indx];
+}
+
 bool BoardController::LocationIsOccupied(int x, int y) const
 {
     return (Board[x][y] != nullptr);
@@ -117,6 +136,6 @@ bool BoardController::LocationIsOccupied(int x, int y) const
 
 bool BoardController::IsValidLocation(int x, int y) const
 {
-    return ((x < BOARD_WIDTH_IN_RECTANGLES && x >= 0) &&
-        (y < BOARD_HEIGHT_IN_RECTANGLES && y >= 0));
+    return ((x < board_width_in_rectangles && x >= 0) &&
+        (y < board_height_in_rectangles && y >= 0));
 }

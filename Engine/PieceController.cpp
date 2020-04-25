@@ -45,6 +45,26 @@ bool PieceController::SpawnNextPiece()
     return true;
 }
 
+void PieceController::DrawActivePiece()
+{
+    const static VectorPosition_t& active_piece_offset = boardController.GetPieceOffset(0);
+
+    if (active_piece)
+    {
+        DrawPiece(active_piece, active_piece_offset.x, active_piece_offset.y, true);
+    }
+}
+
+void PieceController::DrawNextPieces()
+{
+    const static VectorPosition_t& next_piece_offset = boardController.GetPieceOffset(1);
+
+    if (next_piece)
+    {
+        DrawPiece(next_piece, next_piece_offset.x, next_piece_offset.y, false);
+    }
+}
+
 void PieceController::GenerateNextPiece()
 {
     next_piece = new Piece();
@@ -104,16 +124,16 @@ bool PieceController::PieceCanBePlacedOnBoard()
     return true;
 }
 
-void PieceController::DrawPiece() const
+void PieceController::DrawPiece(Piece * piece, int x_offset, int y_offset, bool draw_landing_piece_as_well) const
 {
-    if (active_piece == NULL)
+    if (piece == NULL)
         return;
 
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
-        if (active_piece->tiles[i])
+        if (piece->tiles[i])
         {
-            active_piece->tiles[i]->DrawMe(true);
+            piece->tiles[i]->DrawMe(draw_landing_piece_as_well, x_offset, y_offset);
         }
     }
 }

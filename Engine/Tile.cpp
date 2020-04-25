@@ -20,18 +20,18 @@ inline Color Tile::SetColor(int i, int z) const
         ? Colors::Gray : clr;
 }
 
-void Tile::DrawMe(bool draw_landing_as_well) const
+void Tile::DrawMe(bool draw_landing_as_well, int x_offset, int y_offset) const
 {
     for (int i = 0; i < len; i++)
     {
         for (int z = 0; z < len; z++)
         {
-            gfx.PutPixel(len * current_location.x + i, len * current_location.y + z, SetColor(i, z));
+            gfx.PutPixel(len * current_location.x + i + x_offset, len * current_location.y + z + y_offset, SetColor(i, z));
 
             if (draw_landing_as_well) //Could make another function for drawing landing piece but wanted to save the extra for loop...
             {
                 if (!((i == 0) || (z == 0) || (i == len - 1) || (z == len - 1))) continue;
-                gfx.PutPixel(len * landing_location.x + i, len * landing_location.y + z, Colors::White);
+                gfx.PutPixel(len * landing_location.x + i + x_offset, len * landing_location.y + z + y_offset, Colors::White);
             }
         }
     }

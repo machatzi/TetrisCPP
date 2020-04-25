@@ -1,18 +1,30 @@
 #pragma once
+#include "Graphics.h"
 #include "Common.h"
 
 class BoardController
 {
 public:
-    BoardController();
+    BoardController(VectorPosition_t board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels);
 
     void ClearCompleteLines();
-    void DrawBoard();
+    void DrawBoard( Graphics& gfx );
     bool MoveIsPossible(int x, int y) const;
     void StoreTile(void* tile);
     void ClearBoard();
-private:
-    void* Board[BOARD_WIDTH_IN_RECTANGLES][BOARD_HEIGHT_IN_RECTANGLES] = { nullptr };
+    const VectorPosition_t& GetPieceOffset(int indx) const;
+private:    
+    const VectorPosition_t pieces_offset_location[3] = {
+        { 10, 10 },
+        { 263, 80 },
+        { 100, 300 }
+    };
+    VectorPosition_t board_offset_location;
+    const int board_width_in_rectangles;
+    const int board_height_in_rectangles;
+    const int board_square_length_in_pixels;
+    void*** Board = nullptr;
+
     
     bool LocationIsOccupied(int x, int y) const;
     bool IsValidLocation(int x, int y) const;

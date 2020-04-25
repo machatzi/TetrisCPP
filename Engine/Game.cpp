@@ -27,9 +27,12 @@ using namespace std;
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+    boardController(board_offset_location, 10, 20, 30)
 {
     piecesController = new PiecesController(gfx, boardController);
+    board_width_in_pixels = 10 * board_square_length_in_pixels;
+    board_height_in_pixels = 20 * board_square_length_in_pixels;
 }
 
 void Game::Go()
@@ -42,6 +45,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+    
     if (is_game_over)
     {
         if (wnd.kbd.KeyIsPressed(VK_SPACE)) //New Game
@@ -156,10 +160,35 @@ void Game::UpdateModel()
       
 }
 
+void Game::DrawBorders()
+{
+    for (int y = 0; y <= board_offset_location.y; y++)
+    {
+        for (int x = 0; x < board_width_in_pixels + 2 * board_offset_location.x; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+    }
+
+    for (int y = board_offset_location.y + board_height_in_pixels; y < 2 * board_offset_location.y + board_height_in_pixels; y++)
+    {
+        for (int x = 0; x < board_width_in_pixels + 2 * board_offset_location.x; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+    }
+
+    for (int y = board_offset_location.y; y < board_offset_location.y + board_height_in_pixels; y++)
+    {
+        for (int x = 0; x < board_offset_location.x; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+
+        for (int x = board_offset_location.x + board_width_in_pixels; x < 2 * board_offset_location.x + board_width_in_pixels; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+    }
+}
+
 void Game::ComposeFrame()
 {
-    boardController.DrawBoard();
+    boardController.DrawBoard(gfx);
     piecesController->DrawPiece();
+    DrawBorders();
     if (is_game_over)
     {
         //to implement game over graphics

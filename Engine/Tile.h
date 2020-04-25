@@ -8,7 +8,7 @@ class Tile
 public:
     Tile(Graphics& gfx, BoardController& boardController, VectorPosition_t location, int len, Color clr);
 
-    void DrawMe(bool draw_landing_as_well) const;
+    void DrawMe(bool draw_landing_as_well, int x_offset, int y_offset) const;
     void UpdateLocation(int x, int y);
     void UpdateLandingLocation(int y_offset);
     bool IsOffsetPossibleBy(int x_offset, int y_offset);
