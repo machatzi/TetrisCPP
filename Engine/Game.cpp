@@ -84,8 +84,10 @@ void Game::UpdateModel()
 
     if (wnd.kbd.KeyIsPressed(VK_DOWN))
     {
-        if (vkdown_was_released)
+        move_down_manual_speed_time_passed += dt;
+        if ((vkdown_was_released) || (move_down_manual_speed_time_passed >= move_down_manual_speed))
         {
+            move_down_manual_speed_time_passed -= move_down_manual_speed;
             vkdown_was_released = false;
             piecesController->MovePiece(MoveDirection::DOWN);
         }
@@ -93,12 +95,15 @@ void Game::UpdateModel()
     else
     {
         vkdown_was_released = true;
+        move_down_manual_speed_time_passed = 0.0f;
     }
 
     if (wnd.kbd.KeyIsPressed(VK_RIGHT))
     {
-        if (vkright_was_released)
+        move_right_manual_speed_time_passed += dt;
+        if ((vkright_was_released) || (move_right_manual_speed_time_passed >= move_right_manual_speed))
         {
+            move_right_manual_speed_time_passed -= move_right_manual_speed;
             vkright_was_released = false;
             piecesController->MovePiece(MoveDirection::RIGHT);
         }
@@ -106,12 +111,15 @@ void Game::UpdateModel()
     else
     {
         vkright_was_released = true;
+        move_right_manual_speed_time_passed = 0.0f;
     }
 
     if (wnd.kbd.KeyIsPressed(VK_LEFT))
     {
-        if (vkleft_was_released)
+        move_left_manual_speed_time_passed += dt;
+        if ((vkleft_was_released) || (move_left_manual_speed_time_passed >= move_left_manual_speed))
         {
+            move_left_manual_speed_time_passed -= move_left_manual_speed;
             vkleft_was_released = false;
             piecesController->MovePiece(MoveDirection::LEFT);
         }
@@ -119,6 +127,7 @@ void Game::UpdateModel()
     else
     {
         vkleft_was_released = true;
+        move_left_manual_speed_time_passed = 0.0f;
     }
 
     if (wnd.kbd.KeyIsPressed(VK_UP))

@@ -72,6 +72,13 @@ private:
     float time_passed = 0.0f;
     float move_down_speed_min = 0.3f;
 
+    static constexpr float move_right_manual_speed = 0.1f;
+    float move_right_manual_speed_time_passed = 0.0f;
+    static constexpr float move_left_manual_speed = 0.1f;
+    float move_left_manual_speed_time_passed = 0.0f;
+    static constexpr float move_down_manual_speed = 0.18f;
+    float move_down_manual_speed_time_passed = 0.0f;
+
     bool is_game_over = false;
 	/********************************/
 };
