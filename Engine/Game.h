@@ -27,6 +27,7 @@
 #include "PiecesController.h"
 #include "Common.h"
 #include "FrameTimer.h"
+#include "Sound.h"
 
 class Game
 {
@@ -81,4 +82,6 @@ private:
 
     bool is_game_over = false;
 	/********************************/
+
+    Sound Fall;
 };

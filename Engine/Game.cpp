@@ -136,6 +136,7 @@ void Game::UpdateModel()
         {
             vkup_was_released = false;
             piecesController->RootPiece();
+            Fall.Play();
         }
     }
     else

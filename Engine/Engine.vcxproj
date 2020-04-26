@@ -151,6 +151,8 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="PiecesController.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="PieceController.h" />
   </ItemGroup>
@@ -165,6 +167,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PiecesController.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="PieceController.cpp" />
   </ItemGroup>
@@ -235,6 +238,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Chili.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Media\clear.wav" />
+    <Media Include="Media\fall.wav" />
+    <Media Include="Media\gameover.wav" />
+    <Media Include="Media\line.wav" />
+    <Media Include="Media\selection.wav" />
+    <Media Include="Media\success.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
