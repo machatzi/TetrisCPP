@@ -33,6 +33,7 @@ Game::Game( MainWindow& wnd )
     piecesController = new PiecesController(gfx, boardController);
     board_width_in_pixels = 10 * board_square_length_in_pixels;
     board_height_in_pixels = 20 * board_square_length_in_pixels;
+    GameoverSnd = Sound(L"Media\\gameover.wav");
 }
 
 void Game::Go()
@@ -71,6 +72,7 @@ void Game::UpdateModel()
     if (!piecesController->SpawnNewPiece())
     {
         is_game_over = true;
+        GameoverSnd.Play();
         return;
     }
 
@@ -136,7 +138,6 @@ void Game::UpdateModel()
         {
             vkup_was_released = false;
             piecesController->RootPiece();
-            Fall.Play();
         }
     }
     else

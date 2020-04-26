@@ -16,10 +16,14 @@ BoardController::BoardController(VectorPosition_t board_offset_location, const i
     for (int i = 0; i < board_width_in_rectangles; i++)
         for (int z = 0; z < board_height_in_rectangles; z++)
             Board[i][z] = nullptr;
+
+    LineClear = Sound(L"Media\\line.wav");
+    TetrisClear = Sound(L"Media\\se_game_tetris.wav");
 }
 
 void BoardController::ClearCompleteLines()
 {
+    int lines_cleared = 0;
     for (int y = board_height_in_rectangles - 1; y >= 0; y--)
     {
         if (LineIsEmpty(y))
@@ -27,10 +31,18 @@ void BoardController::ClearCompleteLines()
 
         if (LineIsComplete(y))
         {
+            lines_cleared++;
             RemoveLine(y);
             ShiftLinesDown(y);
             y++; //Need to check again same line due to shifting down
         }
+    }
+    if (lines_cleared > 0)
+    {
+        if (lines_cleared == 4)
+            TetrisClear.Play();
+        else
+            LineClear.Play();
     }
 }
 

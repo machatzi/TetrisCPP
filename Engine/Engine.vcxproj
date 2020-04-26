@@ -245,6 +245,9 @@
     <Media Include="Media\gameover.wav" />
     <Media Include="Media\line.wav" />
     <Media Include="Media\selection.wav" />
+    <Media Include="Media\se_game_bfall.wav" />
+    <Media Include="Media\se_game_rotate.wav" />
+    <Media Include="Media\se_game_tetris.wav" />
     <Media Include="Media\success.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,6 +2,7 @@
 #include "BoardController.h"
 #include "Tile.h"
 #include "Common.h"
+#include "Sound.h"
 
 #define TETRAMINO_NUMBER_OF_TILES 4
 #define NUMBER_OF_POSSIBLE_ROTATIONS 4
@@ -56,7 +57,9 @@ private:
 
     Graphics& gfx;
     BoardController& boardController;
-
+    Sound RotateSnd;
+    Sound FallSnd;
+    Sound BruteFall;
     ~PieceController();
     const OffsetData_t* getOffsetData(PieceShape piece_shape);
 

@@ -82,6 +82,5 @@ private:
 
     bool is_game_over = false;
 	/********************************/
-
-    Sound Fall;
+    Sound GameoverSnd;
 };

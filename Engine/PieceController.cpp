@@ -3,9 +3,12 @@
 
 PieceController::PieceController(Graphics& gfx, BoardController& boardController)
     :
-    gfx (gfx),
-    boardController (boardController)
+    gfx(gfx),
+    boardController(boardController)
 {
+    RotateSnd = Sound(L"Media\\se_game_rotate.wav");
+    FallSnd = Sound(L"Media\\fall.wav");
+    BruteFall = Sound(L"Media\\se_game_bfall.wav");
 }
 
 void PieceController::Init()
@@ -169,6 +172,7 @@ void PieceController::MovePiece(MoveDirection direction)
 
             if (direction == MoveDirection::DOWN)
             {
+                FallSnd.Play();
                 StorePieceToBoard();
             }
 
@@ -187,6 +191,7 @@ void PieceController::RootPiece()
     {
         active_piece->tiles[i]->RootMe();
     }
+    BruteFall.Play();
     StorePieceToBoard();
 }
 
@@ -220,6 +225,7 @@ void PieceController::RotatePiece(bool rotate_clockwise)
             {
                 active_piece->current_rotation_indx = next_rotation_indx;
                 MovePieceToNewLocation();
+                RotateSnd.Play();
                 return;
             }
         }
@@ -286,7 +292,7 @@ void PieceController::StorePieceToBoard()
 
         active_piece->tiles[i] = NULL;
     }
-
+    
     active_piece->centered_tile_location = NULL;
     delete active_piece;
     active_piece = NULL;

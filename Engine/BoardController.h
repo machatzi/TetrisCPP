@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "Common.h"
+#include "Sound.h"
 
 class BoardController
 {
@@ -24,7 +25,8 @@ private:
     const int board_height_in_rectangles;
     const int board_square_length_in_pixels;
     void*** Board = nullptr;
-
+    Sound LineClear;
+    Sound TetrisClear;
     
     bool LocationIsOccupied(int x, int y) const;
     bool IsValidLocation(int x, int y) const;

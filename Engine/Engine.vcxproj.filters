@@ -154,5 +154,14 @@
     <Media Include="Media\gameover.wav">
       <Filter>Media</Filter>
     </Media>
+    <Media Include="Media\se_game_tetris.wav">
+      <Filter>Media</Filter>
+    </Media>
+    <Media Include="Media\se_game_rotate.wav">
+      <Filter>Media</Filter>
+    </Media>
+    <Media Include="Media\se_game_bfall.wav">
+      <Filter>Media</Filter>
+    </Media>
   </ItemGroup>
 </Project>
