@@ -67,6 +67,7 @@ private:
     bool vkup_was_released      = true;
     bool z_was_released         = true;
     bool x_was_released         = true;
+    bool vkreturn_was_released  = true;
     /********************************/
 
     float move_down_speed = 1.6f;
@@ -81,6 +82,8 @@ private:
     float move_down_manual_speed_time_passed = 0.0f;
 
     bool is_game_over = false;
+    bool is_game_started = false;
 	/********************************/
     Sound GameoverSnd;
+    Sound TetrisThemeSnd;
 };

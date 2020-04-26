@@ -249,6 +249,7 @@
     <Media Include="Media\se_game_rotate.wav" />
     <Media Include="Media\se_game_tetris.wav" />
     <Media Include="Media\success.wav" />
+    <Media Include="Media\TetrisTheme.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

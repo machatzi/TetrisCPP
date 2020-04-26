@@ -34,11 +34,12 @@ Game::Game( MainWindow& wnd )
     board_width_in_pixels = 10 * board_square_length_in_pixels;
     board_height_in_pixels = 20 * board_square_length_in_pixels;
     GameoverSnd = Sound(L"Media\\gameover.wav");
+    TetrisThemeSnd = Sound(L"Media\\TetrisTheme.wav", 0.0f, 76.841f);
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -48,31 +49,33 @@ void Game::UpdateModel()
 {
     auto dt = ft.Mark();
 
-    if (is_game_over)
+    if ((!is_game_started) || (is_game_over))
     {
-        if (wnd.kbd.KeyIsPressed(VK_SPACE)) //New Game
+        if (wnd.kbd.KeyIsPressed(VK_RETURN)) //Start Game
         {
-            if (vkspace_was_released)
+            if (vkreturn_was_released)
             {
+                is_game_started = true;
                 boardController.ClearBoard();
                 piecesController->Init();
                 is_game_over = false;
-                vkspace_was_released = false;
+                vkreturn_was_released = false;
+                TetrisThemeSnd.Play(1.0f,0.5f);
             }
         }
         else
         {
-            vkspace_was_released = true;
+            vkreturn_was_released = true;
         }
         return;
     }
-
     boardController.ClearCompleteLines();
 
     if (!piecesController->SpawnNewPiece())
     {
         is_game_over = true;
         GameoverSnd.Play();
+        TetrisThemeSnd.StopOne();
         return;
     }
 

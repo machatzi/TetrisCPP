@@ -163,5 +163,8 @@
     <Media Include="Media\se_game_bfall.wav">
       <Filter>Media</Filter>
     </Media>
+    <Media Include="Media\TetrisTheme.wav">
+      <Filter>Media</Filter>
+    </Media>
   </ItemGroup>
 </Project>
