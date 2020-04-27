@@ -20,11 +20,11 @@ enum class PieceShape {
 
 typedef struct OffsetData_s {
     const int number_of_offsets;
-    VectorPosition_t offsets[5][NUMBER_OF_POSSIBLE_ROTATIONS];
+    Vec2 offsets[5][NUMBER_OF_POSSIBLE_ROTATIONS];
 } OffsetData_t;
 
 typedef struct SpawningProperties_s {
-    VectorPosition_t spawn_location;
+    Vec2 spawn_location;
     bool center_rotation_tile = false;
 } SpawningProperties_t;
 
@@ -38,7 +38,7 @@ private:
         int current_rotation_indx = 0;
         const OffsetData_t* offset_data;
         Tile* tiles[TETRAMINO_NUMBER_OF_TILES] = { 0 };
-        VectorPosition_t* centered_tile_location = NULL;
+        Vec2* centered_tile_location = NULL;
     };
 
 public:
@@ -71,34 +71,41 @@ private:
     bool PieceCanBePlacedOnBoard();
 
     const SpawningProperties_t spawn_positions[7][4] = {
-        { { 3, 1 },
+        { { { 3, 1 } },
           { { 4, 1 }, true },
-          { 5, 1 },
-          { 3, 0 } }, //J end
-        { { 3, 1 },
+          { { 5, 1 } },
+          { { 3, 0 } },
+        }, //J end
+        { { { 3, 1 } },
           { { 4, 1 }, true },
-          { 5, 1 },
-          { 5, 0 } }, //L end
-        { { 3, 1 },
+          { { 5, 1 } },
+          { { 5, 0 } },
+        }, //L end
+        { { { 3, 1 } },
           { { 4, 1 }, true },
-          { 4, 0 },
-          { 5, 0 } }, //S end
-        { { 3, 1 },
+          { { 4, 0 } },
+          { { 5, 0 } },
+        }, //S end
+        { { { 3, 1 } },
           { { 4, 1 }, true },
-          { 5, 1 },
-          { 4, 0 } }, //T end
-        { { 3, 0 },
+          { { 5, 1 } },
+          { { 4, 0 } },
+        }, //T end
+        { { { 3, 0 } },
           { { 4, 1 }, true },
-          { 4, 0 },
-          { 5, 1 } }, //Z end
-        { { 3, 0 },
+          { { 4, 0 } },
+          { { 5, 1 } },
+        }, //Z end
+        { { { 3, 0 } },
           { { 4, 0 }, true },
-          { 5, 0 },
-          { 6, 0 } }, //I end
-        { { 4, 0 },
+          { { 5, 0 } },
+          { { 6, 0 } },
+        }, //I end
+        { { { 4, 0 } },
           { { 4, 1 }, true },
-          { 5, 0 },
-          { 5, 1 } } //O end
+          { { 5, 0 } },
+          { { 5, 1 } },
+        }//O end
     };
 
     const OffsetData_t OffsetTable[3] = {

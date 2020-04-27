@@ -2,7 +2,7 @@
 #include "Graphics.h"
 #include "Common.h"
 
-Tile::Tile(Graphics& gfx, BoardController* boardController, VectorPosition_t location, int len, Color clr)
+Tile::Tile(Graphics& gfx, BoardController* boardController, Vec2 location, int len, Color clr)
     :
     gfx(gfx),
     boardController (boardController),
@@ -59,8 +59,8 @@ bool Tile::IsOffsetPossibleBy(int x_offset, int y_offset)
 
 bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, int center_x, int center_y, int offset_x, int offset_y)
 {
-    VectorPosition_t vr;
-    VectorPosition_t vt;
+    Vec2 vr;
+    Vec2 vt;
 
     new_location.x = current_location.x;
     new_location.y = current_location.y;
@@ -93,12 +93,12 @@ void Tile::RootMe()
     current_location = landing_location;
 }
 
-VectorPosition_t* Tile::GetCurrentLocationPtr()
+Vec2* Tile::GetCurrentLocationPtr()
 {
     return &this->current_location;
 }
 
-const VectorPosition_t& Tile::GetLocation() const
+const Vec2& Tile::GetLocation() const
 {
     return current_location;
 }

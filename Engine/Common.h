@@ -5,8 +5,3 @@ enum class MoveDirection {
     LEFT,
     DOWN
 };
-
-typedef struct VectorPosition_s {
-    int x;
-    int y;
-} VectorPosition_t;

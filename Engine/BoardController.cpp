@@ -1,7 +1,7 @@
 #include "BoardController.h"
 #include "Tile.h"
 
-BoardController::BoardController(VectorPosition_t board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels)
+BoardController::BoardController(Vec2 board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels)
     :
     board_offset_location (board_offset_location),
     board_width_in_rectangles (board_width_in_rectangles),
@@ -115,7 +115,7 @@ bool BoardController::MoveIsPossible(int x, int y) const
 
 void BoardController::StoreTile(void* tile)
 {
-    VectorPosition_t* position = static_cast<Tile *>(tile)->GetCurrentLocationPtr();
+    Vec2* position = static_cast<Tile *>(tile)->GetCurrentLocationPtr();
 
     Board[position->x][position->y] = tile;
 }
@@ -151,7 +151,7 @@ int BoardController::GetBoardWidthInRectangles() const
 }
 
 
-const VectorPosition_t& BoardController::GetPieceOffset(int indx) const
+const Vec2& BoardController::GetPieceOffset(int indx) const
 {
     // TODO: insert return statement here
     return pieces_offset_location[indx];

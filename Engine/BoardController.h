@@ -2,12 +2,13 @@
 #include "Graphics.h"
 #include "Common.h"
 #include "Sound.h"
+#include "Vec2.h"
 
 class BoardController
 {
 public:
     BoardController() = default;
-    BoardController(VectorPosition_t board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels);
+    BoardController(Vec2 board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels);
 
     void ClearCompleteLines();
     void DrawBoard( Graphics& gfx );
@@ -18,10 +19,10 @@ public:
     int GetBoardHeightInRectangles() const;
     int GetBoardWidthInRectangles() const;
 
-    const VectorPosition_t& GetPieceOffset(int indx) const;
+    const Vec2& GetPieceOffset(int indx) const;
 private:    
-    const VectorPosition_t board_offset_location;
-    const VectorPosition_t pieces_offset_location[3] = {
+    const Vec2 board_offset_location;
+    const Vec2 pieces_offset_location[3] = {
        board_offset_location,
         { 325, 80 },
         { 100, 300 }
