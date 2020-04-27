@@ -24,12 +24,12 @@
 
 using namespace std;
 
-Game::Game( MainWindow& wnd )
-	:
-	wnd( wnd ),
-	gfx( wnd ),
-    boardController(board_offset_location, 10, 20, 30)
+Game::Game(MainWindow& wnd)
+    :
+    wnd(wnd),
+    gfx(wnd)
 {
+    boardController = new BoardController(board_offset_location, 10, 20, 30);
     piecesController = new PiecesController(gfx, boardController);
     board_width_in_pixels = 10 * board_square_length_in_pixels;
     board_height_in_pixels = 20 * board_square_length_in_pixels;
@@ -56,7 +56,7 @@ void Game::UpdateModel()
             if (vkreturn_was_released)
             {
                 is_game_started = true;
-                boardController.ClearBoard();
+                boardController->ClearBoard();
                 piecesController->Init();
                 is_game_over = false;
                 vkreturn_was_released = false;
@@ -69,7 +69,7 @@ void Game::UpdateModel()
         }
         return;
     }
-    boardController.ClearCompleteLines();
+    boardController->ClearCompleteLines();
 
     if (!piecesController->SpawnNewPiece())
     {
@@ -202,7 +202,7 @@ void Game::DrawBorders()
 
 void Game::ComposeFrame()
 {
-    boardController.DrawBoard(gfx);
+    boardController->DrawBoard(gfx);
     piecesController->DrawPiece();
     DrawBorders();
     if (is_game_over)

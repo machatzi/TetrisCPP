@@ -2,7 +2,7 @@
 #include "Graphics.h"
 #include "Common.h"
 
-Tile::Tile(Graphics& gfx, BoardController& boardController, VectorPosition_t location, int len, Color clr)
+Tile::Tile(Graphics& gfx, BoardController* boardController, VectorPosition_t location, int len, Color clr)
     :
     gfx(gfx),
     boardController (boardController),
@@ -54,7 +54,7 @@ bool Tile::IsOffsetPossibleBy(int x_offset, int y_offset)
     new_location.x += x_offset;
     new_location.y += y_offset;
 
-    return boardController.MoveIsPossible(new_location.x, new_location.y);
+    return boardController->MoveIsPossible(new_location.x, new_location.y);
 }
 
 bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, int center_x, int center_y, int offset_x, int offset_y)
@@ -75,7 +75,7 @@ bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, int center_x, int center
     new_location.x = center_x + vt.x + offset_x;
     new_location.y = center_y + vt.y + offset_y;
 
-    return boardController.MoveIsPossible(new_location.x, new_location.y);
+    return boardController->MoveIsPossible(new_location.x, new_location.y);
 }
 
 void Tile::ResetNewLocation()

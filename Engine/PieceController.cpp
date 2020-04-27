@@ -1,7 +1,7 @@
 #include "PieceController.h"
 
 
-PieceController::PieceController(Graphics& gfx, BoardController& boardController)
+PieceController::PieceController(Graphics& gfx, BoardController* boardController)
     :
     gfx(gfx),
     boardController(boardController)
@@ -50,7 +50,7 @@ bool PieceController::SpawnNextPiece()
 
 void PieceController::DrawActivePiece()
 {
-    const static VectorPosition_t& active_piece_offset = boardController.GetPieceOffset(0);
+    const static VectorPosition_t& active_piece_offset = boardController->GetPieceOffset(0);
 
     if (active_piece)
     {
@@ -60,7 +60,7 @@ void PieceController::DrawActivePiece()
 
 void PieceController::DrawNextPieces()
 {
-    const static VectorPosition_t& next_piece_offset = boardController.GetPieceOffset(1);
+    const static VectorPosition_t& next_piece_offset = boardController->GetPieceOffset(1);
 
     if (next_piece)
     {
@@ -119,7 +119,7 @@ bool PieceController::PieceCanBePlacedOnBoard()
         if (active_piece->tiles[i])
         {
             const VectorPosition_t& tile_location = active_piece->tiles[i]->GetLocation();
-            if (!boardController.MoveIsPossible(tile_location.x, tile_location.y))
+            if (!boardController->MoveIsPossible(tile_location.x, tile_location.y))
                 return false;
         }
     }
@@ -241,7 +241,7 @@ void PieceController::UpdateActivePieceLandingLocation()
         tile_current_location = active_piece->tiles[i]->GetCurrentLocationPtr();
 
         int possible_steps_so_far = 0;
-        while (boardController.MoveIsPossible(tile_current_location->x, tile_current_location->y + possible_steps_so_far + 1))
+        while (boardController->MoveIsPossible(tile_current_location->x, tile_current_location->y + possible_steps_so_far + 1))
         {
             possible_steps_so_far++;
         }
@@ -288,7 +288,7 @@ void PieceController::StorePieceToBoard()
 {
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
-        boardController.StoreTile(active_piece->tiles[i]);
+        boardController->StoreTile(active_piece->tiles[i]);
 
         active_piece->tiles[i] = NULL;
     }

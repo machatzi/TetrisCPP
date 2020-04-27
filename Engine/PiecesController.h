@@ -7,7 +7,7 @@
 class PiecesController
 {
 public:
-    PiecesController(Graphics& gfx, BoardController& boardController);
+    PiecesController(Graphics& gfx, BoardController* boardController);
 
     void Init();
     bool SpawnNewPiece();
@@ -17,7 +17,7 @@ public:
     void RotatePiece(bool rotate_clockwise);
 private:
     Graphics& gfx;
-    BoardController& boardController;
+    BoardController* boardController;
     PieceController* curPieceController;
 };
 

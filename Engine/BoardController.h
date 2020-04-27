@@ -6,6 +6,7 @@
 class BoardController
 {
 public:
+    BoardController() = default;
     BoardController(VectorPosition_t board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels);
 
     void ClearCompleteLines();

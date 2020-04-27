@@ -2,7 +2,7 @@
 #include "PieceController.h"
 
 
-PiecesController::PiecesController(Graphics& gfx, BoardController& boardController)
+PiecesController::PiecesController(Graphics& gfx, BoardController* boardController)
     :
     gfx (gfx),
     boardController (boardController)

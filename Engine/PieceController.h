@@ -42,7 +42,7 @@ private:
     };
 
 public:
-    PieceController(Graphics& gfx, BoardController& boardController);
+    PieceController(Graphics& gfx, BoardController* boardController);
     void Init();
     bool SpawnNextPiece();
     void DrawActivePiece();
@@ -56,7 +56,7 @@ private:
     Piece* next_piece = NULL;
 
     Graphics& gfx;
-    BoardController& boardController;
+    BoardController* boardController;
     Sound RotateSnd;
     Sound FallSnd;
     Sound BruteFall;
