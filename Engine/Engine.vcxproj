@@ -157,6 +157,7 @@
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="PieceController.h" />
+    <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardController.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="PieceController.cpp" />
+    <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">
