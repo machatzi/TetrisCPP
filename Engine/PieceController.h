@@ -38,7 +38,7 @@ private:
         int current_rotation_indx = 0;
         const OffsetData_t* offset_data;
         Tile* tiles[TETRAMINO_NUMBER_OF_TILES] = { 0 };
-        Vec2* centered_tile_location = NULL;
+        Vec2* centered_tile_location_ptr;
     };
 
 public:

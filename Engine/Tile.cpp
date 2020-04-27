@@ -37,10 +37,9 @@ void Tile::DrawMe(bool draw_landing_as_well, int x_offset, int y_offset) const
     }
 }
 
-void Tile::UpdateLocation(int x, int y)
+void Tile::UpdateLocation(Vec2 new_location)
 {
-    this->current_location.x = x;
-    this->current_location.y = y;
+    this->current_location = new_location;
 }
 
 void Tile::UpdateLandingLocation(int y_offset)
@@ -49,33 +48,30 @@ void Tile::UpdateLandingLocation(int y_offset)
     this->landing_location.x = this->current_location.x;
 }
 
-bool Tile::IsOffsetPossibleBy(int x_offset, int y_offset)
+bool Tile::IsOffsetPossibleBy(Vec2 offset_location)
 {
-    new_location.x += x_offset;
-    new_location.y += y_offset;
+    new_location += offset_location;
 
-    return boardController->MoveIsPossible(new_location.x, new_location.y);
+    return boardController->MoveIsPossible(new_location);
 }
 
-bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, int center_x, int center_y, int offset_x, int offset_y)
+bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, Vec2* center_location, Vec2 offset_location)
 {
     Vec2 vr;
     Vec2 vt;
 
-    new_location.x = current_location.x;
-    new_location.y = current_location.y;
+    new_location = current_location;
 
-    vr.x = new_location.x - center_x;
-    vr.y = new_location.y - center_y;
+    vr = new_location - *center_location;
 
     int rotation_multiplication = (rotate_clock_wise) ? 1 : -1;
+
     vt.x = (rotation_multiplication)*(-1)* vr.y;
     vt.y = (rotation_multiplication)*vr.x;
 
-    new_location.x = center_x + vt.x + offset_x;
-    new_location.y = center_y + vt.y + offset_y;
+    new_location = *center_location + vt + offset_location;
 
-    return boardController->MoveIsPossible(new_location.x, new_location.y);
+    return boardController->MoveIsPossible(new_location);
 }
 
 void Tile::ResetNewLocation()
@@ -91,6 +87,11 @@ void Tile::MoveToNewLocation()
 void Tile::RootMe()
 {
     current_location = landing_location;
+}
+
+Vec2 Tile::GetCurrentLocation()
+{
+    return this->current_location;
 }
 
 Vec2* Tile::GetCurrentLocationPtr()

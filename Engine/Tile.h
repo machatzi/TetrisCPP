@@ -10,13 +10,14 @@ public:
     Tile(Graphics& gfx, BoardController* boardController, Vec2 location, int len, Color clr);
 
     void DrawMe(bool draw_landing_as_well, int x_offset, int y_offset) const;
-    void UpdateLocation(int x, int y);
+    void UpdateLocation(Vec2 new_location);
     void UpdateLandingLocation(int y_offset);
-    bool IsOffsetPossibleBy(int x_offset, int y_offset);
-    bool IsRotationPossibleBy(bool rotate_clock_wise, int center_x, int center_y, int offset_x, int offset_y);
+    bool IsOffsetPossibleBy(Vec2 offset_location);
+    bool IsRotationPossibleBy(bool rotate_clock_wise, Vec2* center_location, Vec2 offset_location);
     void ResetNewLocation();
     void MoveToNewLocation();
     void RootMe();
+    Vec2 GetCurrentLocation();
     Vec2* GetCurrentLocationPtr();
     const Vec2& GetLocation() const;
 private:

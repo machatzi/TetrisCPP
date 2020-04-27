@@ -86,7 +86,7 @@ void PieceController::GenerateNextPiece()
 
         if (spawn_positions[shape_index][i].center_rotation_tile)
         {
-            next_piece->centered_tile_location = next_piece->tiles[i]->GetCurrentLocationPtr();
+            next_piece->centered_tile_location_ptr = next_piece->tiles[i]->GetCurrentLocationPtr();
         }
     }
 }
@@ -121,7 +121,7 @@ bool PieceController::PieceCanBePlacedOnBoard()
         if (active_piece->tiles[i])
         {
             const Vec2& tile_location = active_piece->tiles[i]->GetLocation();
-            if (!boardController->MoveIsPossible(tile_location.x, tile_location.y))
+            if (!boardController->MoveIsPossible(tile_location))
                 return false;
         }
     }
@@ -148,19 +148,18 @@ void PieceController::MovePiece(MoveDirection direction)
     if (active_piece == NULL)
         return;
 
-    int x_offset = 0;
-    int y_offset = 0;
+    Vec2 offset_location(1, 0);
 
     switch (direction)
     {
     case MoveDirection::RIGHT:
-        x_offset = 1;
+        offset_location = Vec2(1, 0);
         break;
     case MoveDirection::LEFT:
-        x_offset = -1;
+        offset_location = Vec2(-1, 0);
         break;
     case MoveDirection::DOWN:
-        y_offset = 1;
+        offset_location = Vec2(0, 1);
         break;
     default:
         break;
@@ -168,7 +167,7 @@ void PieceController::MovePiece(MoveDirection direction)
 
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
-        if (!active_piece->tiles[i]->IsOffsetPossibleBy(x_offset,y_offset))
+        if (!active_piece->tiles[i]->IsOffsetPossibleBy(offset_location))
         {
             ResetPiece();
 
@@ -216,7 +215,7 @@ void PieceController::RotatePiece(bool rotate_clockwise)
             bool piece_can_rotate = true;
             for (int k = 0; k < TETRAMINO_NUMBER_OF_TILES; k++)
             {
-                if (!active_piece->tiles[k]->IsRotationPossibleBy(rotate_clockwise, active_piece->centered_tile_location->x, active_piece->centered_tile_location->y, offset_vector.x, offset_vector.y))
+                if (!active_piece->tiles[k]->IsRotationPossibleBy(rotate_clockwise, active_piece->centered_tile_location_ptr, offset_vector))
                 {
                     ResetPiece();
                     piece_can_rotate = false;
@@ -238,13 +237,14 @@ void PieceController::UpdateActivePieceLandingLocation()
 {   
     int max_possible_y_offset = boardController->GetSquareLength();
 
-    Vec2* tile_current_location;
+    Vec2 tile_current_location;
+    
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
-        tile_current_location = active_piece->tiles[i]->GetCurrentLocationPtr();
+        tile_current_location = active_piece->tiles[i]->GetCurrentLocation();
 
         int possible_steps_so_far = 0;
-        while (boardController->MoveIsPossible(tile_current_location->x, tile_current_location->y + possible_steps_so_far + 1))
+        while (boardController->MoveIsPossible(Vec2(tile_current_location.x, tile_current_location.y + possible_steps_so_far + 1)))
         {
             possible_steps_so_far++;
         }
@@ -296,7 +296,7 @@ void PieceController::StorePieceToBoard()
         active_piece->tiles[i] = NULL;
     }
     
-    active_piece->centered_tile_location = NULL;
+    active_piece->centered_tile_location_ptr = NULL;
     delete active_piece;
     active_piece = NULL;
 }

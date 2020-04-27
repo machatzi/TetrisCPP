@@ -89,7 +89,7 @@ void BoardController::ShiftLinesDown(int y_indx)
 
             if (Board[x][y])
             {
-                static_cast<Tile*>(Board[x][y])->UpdateLocation(x, y + 1);
+                static_cast<Tile*>(Board[x][y])->UpdateLocation(Vec2(x, y + 1));
                 Board[x][y] = nullptr;
             }
         }
@@ -108,16 +108,16 @@ void BoardController::DrawBoard( Graphics& gfx )
     }
 }
 
-bool BoardController::MoveIsPossible(int x, int y) const
+bool BoardController::MoveIsPossible(Vec2 location) const
 {
-    return (IsValidLocation(x, y) && !LocationIsOccupied(x, y));
+    return (IsValidLocation(location) && !LocationIsOccupied(location));
 }
 
 void BoardController::StoreTile(void* tile)
 {
-    Vec2* position = static_cast<Tile *>(tile)->GetCurrentLocationPtr();
+    Vec2 position = static_cast<Tile *>(tile)->GetCurrentLocation();
 
-    Board[position->x][position->y] = tile;
+    Board[position.x][position.y] = tile;
 }
 
 void BoardController::ClearBoard()
@@ -157,13 +157,13 @@ const Vec2& BoardController::GetPieceOffset(int indx) const
     return pieces_offset_location[indx];
 }
 
-bool BoardController::LocationIsOccupied(int x, int y) const
+bool BoardController::LocationIsOccupied(Vec2 location) const
 {
-    return (Board[x][y] != nullptr);
+    return (Board[location.x][location.y] != nullptr);
 }
 
-bool BoardController::IsValidLocation(int x, int y) const
+bool BoardController::IsValidLocation(Vec2 location) const
 {
-    return ((x < board_width_in_rectangles && x >= 0) &&
-        (y < board_height_in_rectangles && y >= 0));
+    return ((location.x < board_width_in_rectangles && location.x >= 0) &&
+        (location.y < board_height_in_rectangles && location.y >= 0));
 }
