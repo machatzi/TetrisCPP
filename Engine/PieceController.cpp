@@ -70,6 +70,8 @@ void PieceController::DrawNextPieces()
 
 void PieceController::GenerateNextPiece()
 {
+    const int sqr_length = boardController->GetSquareLength();
+
     next_piece = new Piece();
 
     next_piece->piece_type = static_cast<PieceShape>(rand() % static_cast<int>(PieceShape::NUMBER_OF_SHAPES));
@@ -80,7 +82,7 @@ void PieceController::GenerateNextPiece()
 
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
-        next_piece->tiles[i] = new Tile(gfx, boardController, spawn_positions[shape_index][i].spawn_location, 30, ShapeInitColors[shape_index]);
+        next_piece->tiles[i] = new Tile(gfx, boardController, spawn_positions[shape_index][i].spawn_location, sqr_length, ShapeInitColors[shape_index]);
 
         if (spawn_positions[shape_index][i].center_rotation_tile)
         {
@@ -233,8 +235,9 @@ void PieceController::RotatePiece(bool rotate_clockwise)
 }
 
 void PieceController::UpdateActivePieceLandingLocation()
-{
-    int max_possible_y_offset = 20;
+{   
+    int max_possible_y_offset = boardController->GetSquareLength();
+
     VectorPosition_t* tile_current_location;
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {

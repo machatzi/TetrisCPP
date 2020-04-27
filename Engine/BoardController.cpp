@@ -135,6 +135,22 @@ void BoardController::ClearBoard()
     }
 }
 
+int BoardController::GetSquareLength() const
+{
+    return board_square_length_in_pixels;
+}
+
+int BoardController::GetBoardHeightInRectangles() const
+{
+    return board_height_in_rectangles;
+}
+
+int BoardController::GetBoardWidthInRectangles() const
+{
+    return board_width_in_rectangles;
+}
+
+
 const VectorPosition_t& BoardController::GetPieceOffset(int indx) const
 {
     // TODO: insert return statement here

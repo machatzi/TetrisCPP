@@ -29,10 +29,10 @@ Game::Game(MainWindow& wnd)
     wnd(wnd),
     gfx(wnd)
 {
-    boardController = new BoardController(board_offset_location, 10, 20, 30);
+    boardController = new BoardController(board_offset_location, board_width_in_rectangles, board_height_in_rectangles, board_square_length_in_pixels);
     piecesController = new PiecesController(gfx, boardController);
-    board_width_in_pixels = 10 * board_square_length_in_pixels;
-    board_height_in_pixels = 20 * board_square_length_in_pixels;
+    board_width_in_pixels = board_width_in_rectangles * board_square_length_in_pixels;
+    board_height_in_pixels = board_height_in_rectangles * board_square_length_in_pixels;
     GameoverSnd = Sound(L"Media\\gameover.wav");
     TetrisThemeSnd = Sound(L"Media\\TetrisTheme.wav", 0.0f, 76.841f);
 }

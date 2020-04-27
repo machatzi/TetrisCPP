@@ -14,14 +14,18 @@ public:
     bool MoveIsPossible(int x, int y) const;
     void StoreTile(void* tile);
     void ClearBoard();
+    int GetSquareLength() const;
+    int GetBoardHeightInRectangles() const;
+    int GetBoardWidthInRectangles() const;
+
     const VectorPosition_t& GetPieceOffset(int indx) const;
 private:    
+    const VectorPosition_t board_offset_location;
     const VectorPosition_t pieces_offset_location[3] = {
-        { 10, 10 },
-        { 263, 80 },
+       board_offset_location,
+        { 325, 80 },
         { 100, 300 }
     };
-    VectorPosition_t board_offset_location;
     const int board_width_in_rectangles;
     const int board_height_in_rectangles;
     const int board_square_length_in_pixels;

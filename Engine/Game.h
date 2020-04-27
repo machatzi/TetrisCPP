@@ -50,14 +50,18 @@ private:
 
 	/********************************/
 	/*  User Variables              */
-    const VectorPosition_t board_offset_location = { 10, 10 };
+    const VectorPosition_t board_offset_location = { 15, 15 };
     BoardController* boardController;
     PiecesController* piecesController = NULL;
     FrameTimer ft;
 
+    const int board_square_length_in_pixels = 35;
+    const int board_width_in_rectangles = 10;
+    const int board_height_in_rectangles = 20;
+
     int board_width_in_pixels;
     int board_height_in_pixels;
-    int board_square_length_in_pixels = 30;
+
 
     /* Buttons flags */
     bool vkleft_was_released    = true;
