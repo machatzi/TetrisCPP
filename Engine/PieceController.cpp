@@ -235,7 +235,7 @@ void PieceController::RotatePiece(bool rotate_clockwise)
 
 void PieceController::UpdateActivePieceLandingLocation()
 {   
-    int max_possible_y_offset = boardController->GetSquareLength();
+    int max_possible_y_offset = boardController->GetBoardHeightInRectangles();
 
     Vec2 tile_current_location;
     
