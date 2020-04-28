@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Tile.h"
+#include <string>
 
 using namespace std;
 
@@ -35,6 +36,7 @@ Game::Game(MainWindow& wnd)
     board_height_in_pixels = board_height_in_rectangles * board_square_length_in_pixels;
     GameoverSnd = Sound(L"Media\\gameover.wav");
     TetrisThemeSnd = Sound(L"Media\\TetrisTheme.wav", 0.0f, 76.841f);
+    font = new Font("Fixedsys16x28.bmp");
 }
 
 void Game::Go()

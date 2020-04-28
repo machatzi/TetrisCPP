@@ -316,6 +316,19 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+Color Graphics::GetPixel(int x, int y) const
+{
+	assert(x >= 0);
+	assert(x < int(Graphics::ScreenWidth));
+	assert(y >= 0);
+	assert(y < int(Graphics::ScreenHeight));
+	return pSysBuffer[Graphics::ScreenWidth * y + x];
+}
+
+RectI Graphics::GetScreenRect()
+{
+	return{ 0,ScreenWidth,0,ScreenHeight };
+}
 
 //////////////////////////////////////////////////
 //           Graphics Exception

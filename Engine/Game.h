@@ -28,6 +28,7 @@
 #include "Common.h"
 #include "FrameTimer.h"
 #include "Sound.h"
+#include "Font.h"
 
 class Game
 {
@@ -45,7 +46,7 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-
+    Font* font;
 	/********************************/
 	/*  User Variables              */
     const Vec2i board_offset_location = { 100, 12 };
