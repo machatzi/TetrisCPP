@@ -43,14 +43,12 @@ private:
 	/*  User Functions              */
 	/********************************/
 private:
-    void DrawBorders();
-
 	MainWindow& wnd;
 	Graphics gfx;
 
 	/********************************/
 	/*  User Variables              */
-    const Vec2 board_offset_location = { 15, 15 };
+    const Vec2 board_offset_location = { 100, 12 };
     BoardController* boardController;
     PiecesController* piecesController = NULL;
     FrameTimer ft;
@@ -74,9 +72,9 @@ private:
     bool vkreturn_was_released  = true;
     /********************************/
 
-    float move_down_speed = 1.6f;
+    float move_down_speed = 1.2f;
     float time_passed = 0.0f;
-    float move_down_speed_min = 0.3f;
+    float move_down_speed_min = 1.2f;
 
     static constexpr float move_right_manual_speed = 0.1f;
     float move_right_manual_speed_time_passed = 0.0f;

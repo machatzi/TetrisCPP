@@ -3,7 +3,8 @@
 
 BoardController::BoardController(Vec2 board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels)
     :
-    board_offset_location (board_offset_location),
+    boarder_offset_location(board_offset_location),
+    board_offset_location( board_offset_location + Vec2(boarder_width_left,boarder_width_top) ),
     board_width_in_rectangles (board_width_in_rectangles),
     board_height_in_rectangles (board_height_in_rectangles),
     board_square_length_in_pixels (board_square_length_in_pixels)
@@ -16,6 +17,9 @@ BoardController::BoardController(Vec2 board_offset_location, const int board_wid
     for (int i = 0; i < board_width_in_rectangles; i++)
         for (int z = 0; z < board_height_in_rectangles; z++)
             Board[i][z] = nullptr;
+
+    board_width_in_pixels = board_width_in_rectangles * board_square_length_in_pixels;
+    board_height_in_pixels = board_height_in_rectangles * board_square_length_in_pixels;
 
     LineClear = Sound(L"Media\\line.wav");
     TetrisClear = Sound(L"Media\\se_game_tetris.wav");
@@ -98,6 +102,8 @@ void BoardController::ShiftLinesDown(int y_indx)
 
 void BoardController::DrawBoard( Graphics& gfx )
 {
+    DrawBoarder(gfx);
+
     for (int x = 0; x < board_width_in_rectangles; x++)
     {
         for (int y = 0; y < board_height_in_rectangles; y++)
@@ -155,6 +161,37 @@ const Vec2& BoardController::GetPieceOffset(int indx) const
 {
     // TODO: insert return statement here
     return pieces_offset_location[indx];
+}
+
+void BoardController::DrawBoarder(Graphics& gfx)
+{
+    // Draw the TOP boarder
+    for (int y = boarder_offset_location.y; y <= boarder_offset_location.y + boarder_width_top ; y++)
+    {
+        for (int x = boarder_offset_location.x; x < boarder_offset_location.x + boarder_width_left + board_width_in_pixels + boarder_width_right; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+    }
+
+    // Draw the BOTTOM boarder
+    const int start_y = boarder_offset_location.y + boarder_width_top + board_height_in_pixels;
+    for (int y = start_y; y < start_y + boarder_width_bottom; y++)
+    {
+        for (int x = boarder_offset_location.x; x < boarder_offset_location.x + boarder_width_left + board_width_in_pixels + boarder_width_right; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+    }
+    
+    //DRAW THE SIDE BOARDERS
+    for (int y = boarder_offset_location.y + boarder_width_top; y < start_y; y++)
+    {
+        //LEFT
+        for (int x = boarder_offset_location.x; x < boarder_offset_location.x + boarder_width_left; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+
+        //RIGHT
+        const int start_x = boarder_offset_location.x + boarder_width_left + board_width_in_pixels;
+        for (int x = start_x; x < start_x + boarder_width_right; x++)
+            gfx.PutPixel(x, y, Colors::DarkBlue);
+    }
 }
 
 bool BoardController::LocationIsOccupied(int location_x, int location_y) const

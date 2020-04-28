@@ -20,20 +20,31 @@ public:
     int GetBoardWidthInRectangles() const;
 
     const Vec2& GetPieceOffset(int indx) const;
-private:    
-    const Vec2 board_offset_location;
-    const Vec2 pieces_offset_location[3] = {
-       board_offset_location,
-        { 325, 80 },
-        { 100, 300 }
-    };
+private:
+    const int boarder_width_top = 13;
+    const int boarder_width_left = 7;
+    const int boarder_width_right = 7;
+    const int boarder_width_bottom = 20;
+
+    const Vec2 boarder_offset_location;
+
     const int board_width_in_rectangles;
     const int board_height_in_rectangles;
     const int board_square_length_in_pixels;
+    int board_width_in_pixels;
+    int board_height_in_pixels;
     void*** Board = nullptr;
     Sound LineClear;
     Sound TetrisClear;
     
+    const Vec2 board_offset_location;
+    const Vec2 pieces_offset_location[3] = {
+       board_offset_location,
+        { 395, 80 },
+        { 100, 300 }
+    };
+
+    void DrawBoarder( Graphics& gfx );
     bool LocationIsOccupied(int location_x, int location_y) const;
     bool IsValidLocation(int location_x, int location_y) const;
     bool LineIsComplete(int line_indx) const;
