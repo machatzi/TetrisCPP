@@ -47,7 +47,7 @@ public:
     bool SpawnNextPiece();
     void DrawActivePiece();
     void DrawNextPieces();
-    void DrawPiece(Piece* piece, int x_offset, int y_offset, bool draw_landing_piece_as_well) const;
+    void DrawPiece(Piece* piece, Vec2 offset, bool draw_landing_piece_as_well) const;
     void MovePiece(MoveDirection direction);
     void RootPiece();
     void RotatePiece(bool rotate_clockwise);

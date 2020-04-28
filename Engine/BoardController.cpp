@@ -103,14 +103,14 @@ void BoardController::DrawBoard( Graphics& gfx )
         for (int y = 0; y < board_height_in_rectangles; y++)
         {
             if (Board[x][y] != nullptr)
-                static_cast<Tile*>(Board[x][y])->DrawMe(false, board_offset_location.x, board_offset_location.y);
+                static_cast<Tile*>(Board[x][y])->DrawMe(false, board_offset_location);
         }
     }
 }
 
-bool BoardController::MoveIsPossible(Vec2 location) const
+bool BoardController::MoveIsPossible(int location_x, int location_y) const
 {
-    return (IsValidLocation(location) && !LocationIsOccupied(location));
+    return (IsValidLocation(location_x, location_y) && !LocationIsOccupied(location_x, location_y));
 }
 
 void BoardController::StoreTile(void* tile)
@@ -157,13 +157,13 @@ const Vec2& BoardController::GetPieceOffset(int indx) const
     return pieces_offset_location[indx];
 }
 
-bool BoardController::LocationIsOccupied(Vec2 location) const
+bool BoardController::LocationIsOccupied(int location_x, int location_y) const
 {
-    return (Board[location.x][location.y] != nullptr);
+    return (Board[location_x][location_y] != nullptr);
 }
 
-bool BoardController::IsValidLocation(Vec2 location) const
+bool BoardController::IsValidLocation(int location_x, int location_y) const
 {
-    return ((location.x < board_width_in_rectangles && location.x >= 0) &&
-        (location.y < board_height_in_rectangles && location.y >= 0));
+    return ((location_x < board_width_in_rectangles && location_x >= 0) &&
+        (location_y < board_height_in_rectangles && location_y >= 0));
 }

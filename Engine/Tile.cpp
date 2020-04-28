@@ -20,18 +20,21 @@ inline Color Tile::SetColor(int i, int z) const
         ? Colors::Gray : clr;
 }
 
-void Tile::DrawMe(bool draw_landing_as_well, int x_offset, int y_offset) const
+void Tile::DrawMe(bool draw_landing_as_well, Vec2 offset) const
 {
+    const Vec2 tile_current_location = (current_location * len) + offset;
+    const Vec2 tile_landing_location = (landing_location * len) + offset;
+
     for (int i = 0; i < len; i++)
     {
         for (int z = 0; z < len; z++)
         {
-            gfx.PutPixel(len * current_location.x + i + x_offset, len * current_location.y + z + y_offset, SetColor(i, z));
+            gfx.PutPixel(tile_current_location.x + i, tile_current_location.y + z, SetColor(i, z));
 
             if (draw_landing_as_well) //Could make another function for drawing landing piece but wanted to save the extra for loop...
             {
                 if (!((i == 0) || (z == 0) || (i == len - 1) || (z == len - 1))) continue;
-                gfx.PutPixel(len * landing_location.x + i + x_offset, len * landing_location.y + z + y_offset, Colors::White);
+                gfx.PutPixel(tile_landing_location.x + i, tile_landing_location.y + z, Colors::White);
             }
         }
     }
@@ -42,17 +45,16 @@ void Tile::UpdateLocation(Vec2 new_location)
     this->current_location = new_location;
 }
 
-void Tile::UpdateLandingLocation(int y_offset)
+void Tile::UpdateLandingLocation(Vec2 offset_for_landing_tile)
 {
-    this->landing_location.y = this->current_location.y + y_offset;
-    this->landing_location.x = this->current_location.x;
+    this->landing_location = current_location + offset_for_landing_tile;
 }
 
 bool Tile::IsOffsetPossibleBy(Vec2 offset_location)
 {
     new_location += offset_location;
 
-    return boardController->MoveIsPossible(new_location);
+    return boardController->MoveIsPossible(new_location.x, new_location.y);
 }
 
 bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, Vec2* center_location, Vec2 offset_location)
@@ -71,7 +73,7 @@ bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, Vec2* center_location, V
 
     new_location = *center_location + vt + offset_location;
 
-    return boardController->MoveIsPossible(new_location);
+    return boardController->MoveIsPossible(new_location.x, new_location.y);
 }
 
 void Tile::ResetNewLocation()

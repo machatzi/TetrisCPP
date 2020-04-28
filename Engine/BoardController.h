@@ -12,7 +12,7 @@ public:
 
     void ClearCompleteLines();
     void DrawBoard( Graphics& gfx );
-    bool MoveIsPossible(Vec2 location) const;
+    bool MoveIsPossible(int location_x, int location_y) const;
     void StoreTile(void* tile);
     void ClearBoard();
     int GetSquareLength() const;
@@ -34,8 +34,8 @@ private:
     Sound LineClear;
     Sound TetrisClear;
     
-    bool LocationIsOccupied(Vec2 location) const;
-    bool IsValidLocation(Vec2 location) const;
+    bool LocationIsOccupied(int location_x, int location_y) const;
+    bool IsValidLocation(int location_x, int location_y) const;
     bool LineIsComplete(int line_indx) const;
     bool LineIsEmpty(int line_indx) const;
     void RemoveLine(int line_indx);

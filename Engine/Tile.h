@@ -9,9 +9,9 @@ class Tile
 public:
     Tile(Graphics& gfx, BoardController* boardController, Vec2 location, int len, Color clr);
 
-    void DrawMe(bool draw_landing_as_well, int x_offset, int y_offset) const;
+    void DrawMe(bool draw_landing_as_well, Vec2 offset) const;
     void UpdateLocation(Vec2 new_location);
-    void UpdateLandingLocation(int y_offset);
+    void UpdateLandingLocation(Vec2 offset_for_landing_tile);
     bool IsOffsetPossibleBy(Vec2 offset_location);
     bool IsRotationPossibleBy(bool rotate_clock_wise, Vec2* center_location, Vec2 offset_location);
     void ResetNewLocation();

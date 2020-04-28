@@ -18,12 +18,12 @@ Vec2& Vec2::operator+=( const Vec2& rhs )
 	return *this = *this + rhs;
 }
 
-Vec2 Vec2::operator*( float rhs ) const
+Vec2 Vec2::operator*( int rhs ) const
 {
 	return Vec2( x * rhs,y * rhs );
 }
 
-Vec2& Vec2::operator*=( float rhs )
+Vec2& Vec2::operator*=( int rhs )
 {
 	return *this = *this * rhs;
 }

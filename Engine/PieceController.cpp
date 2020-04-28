@@ -54,7 +54,7 @@ void PieceController::DrawActivePiece()
 
     if (active_piece)
     {
-        DrawPiece(active_piece, active_piece_offset.x, active_piece_offset.y, true);
+        DrawPiece(active_piece, active_piece_offset, true);
     }
 }
 
@@ -64,7 +64,7 @@ void PieceController::DrawNextPieces()
 
     if (next_piece)
     {
-        DrawPiece(next_piece, next_piece_offset.x, next_piece_offset.y, false);
+        DrawPiece(next_piece, next_piece_offset, false);
     }
 }
 
@@ -121,7 +121,7 @@ bool PieceController::PieceCanBePlacedOnBoard()
         if (active_piece->tiles[i])
         {
             const Vec2& tile_location = active_piece->tiles[i]->GetLocation();
-            if (!boardController->MoveIsPossible(tile_location))
+            if (!boardController->MoveIsPossible(tile_location.x, tile_location.y))
                 return false;
         }
     }
@@ -129,7 +129,7 @@ bool PieceController::PieceCanBePlacedOnBoard()
     return true;
 }
 
-void PieceController::DrawPiece(Piece * piece, int x_offset, int y_offset, bool draw_landing_piece_as_well) const
+void PieceController::DrawPiece(Piece * piece, Vec2 offset, bool draw_landing_piece_as_well) const
 {
     if (piece == NULL)
         return;
@@ -138,7 +138,7 @@ void PieceController::DrawPiece(Piece * piece, int x_offset, int y_offset, bool 
     {
         if (piece->tiles[i])
         {
-            piece->tiles[i]->DrawMe(draw_landing_piece_as_well, x_offset, y_offset);
+            piece->tiles[i]->DrawMe(draw_landing_piece_as_well, offset);
         }
     }
 }
@@ -236,15 +236,13 @@ void PieceController::RotatePiece(bool rotate_clockwise)
 void PieceController::UpdateActivePieceLandingLocation()
 {   
     int max_possible_y_offset = boardController->GetBoardHeightInRectangles();
-
-    Vec2 tile_current_location;
     
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
-        tile_current_location = active_piece->tiles[i]->GetCurrentLocation();
+        Vec2 tile_current_location = active_piece->tiles[i]->GetCurrentLocation();
 
         int possible_steps_so_far = 0;
-        while (boardController->MoveIsPossible(Vec2(tile_current_location.x, tile_current_location.y + possible_steps_so_far + 1)))
+        while (boardController->MoveIsPossible(tile_current_location.x, tile_current_location.y + possible_steps_so_far + 1))
         {
             possible_steps_so_far++;
         }
@@ -254,9 +252,11 @@ void PieceController::UpdateActivePieceLandingLocation()
             max_possible_y_offset = possible_steps_so_far;
         }
     }
+    Vec2 offset_for_landing_tile(0, max_possible_y_offset);
+
     for (int i = 0; i < TETRAMINO_NUMBER_OF_TILES; i++)
     {
-        active_piece->tiles[i]->UpdateLandingLocation(max_possible_y_offset);
+        active_piece->tiles[i]->UpdateLandingLocation(offset_for_landing_tile);
     }
 }
 
