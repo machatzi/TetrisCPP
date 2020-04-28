@@ -1,10 +1,10 @@
 #include "BoardController.h"
 #include "Tile.h"
 
-BoardController::BoardController(Vec2 board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels)
+BoardController::BoardController(Vec2i board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels)
     :
     boarder_offset_location(board_offset_location),
-    board_offset_location( board_offset_location + Vec2(boarder_width_left,boarder_width_top) ),
+    board_offset_location( board_offset_location + Vec2i(boarder_width_left,boarder_width_top) ),
     board_width_in_rectangles (board_width_in_rectangles),
     board_height_in_rectangles (board_height_in_rectangles),
     board_square_length_in_pixels (board_square_length_in_pixels)
@@ -93,7 +93,7 @@ void BoardController::ShiftLinesDown(int y_indx)
 
             if (Board[x][y])
             {
-                static_cast<Tile*>(Board[x][y])->UpdateLocation(Vec2(x, y + 1));
+                static_cast<Tile*>(Board[x][y])->UpdateLocation(Vec2i(x, y + 1));
                 Board[x][y] = nullptr;
             }
         }
@@ -121,7 +121,7 @@ bool BoardController::MoveIsPossible(int location_x, int location_y) const
 
 void BoardController::StoreTile(void* tile)
 {
-    Vec2 position = static_cast<Tile *>(tile)->GetCurrentLocation();
+    Vec2i position = static_cast<Tile *>(tile)->GetCurrentLocation();
 
     Board[position.x][position.y] = tile;
 }
@@ -157,7 +157,7 @@ int BoardController::GetBoardWidthInRectangles() const
 }
 
 
-const Vec2& BoardController::GetPieceOffset(int indx) const
+const Vec2i& BoardController::GetPieceOffset(int indx) const
 {
     // TODO: insert return statement here
     return pieces_offset_location[indx];

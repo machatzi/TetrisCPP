@@ -2,7 +2,7 @@
 #include "Graphics.h"
 #include "Common.h"
 
-Tile::Tile(Graphics& gfx, BoardController* boardController, Vec2 location, int len, Color clr)
+Tile::Tile(Graphics& gfx, BoardController* boardController, Vec2i location, int len, Color clr)
     :
     gfx(gfx),
     boardController (boardController),
@@ -20,10 +20,10 @@ inline Color Tile::SetColor(int i, int z) const
         ? Colors::Gray : clr;
 }
 
-void Tile::DrawMe(bool draw_landing_as_well, Vec2 offset) const
+void Tile::DrawMe(bool draw_landing_as_well, Vec2i offset) const
 {
-    const Vec2 tile_current_location = (current_location * len) + offset;
-    const Vec2 tile_landing_location = (landing_location * len) + offset;
+    const Vec2i tile_current_location = (current_location * len) + offset;
+    const Vec2i tile_landing_location = (landing_location * len) + offset;
 
     for (int i = 0; i < len; i++)
     {
@@ -40,27 +40,27 @@ void Tile::DrawMe(bool draw_landing_as_well, Vec2 offset) const
     }
 }
 
-void Tile::UpdateLocation(Vec2 new_location)
+void Tile::UpdateLocation(Vec2i new_location)
 {
     this->current_location = new_location;
 }
 
-void Tile::UpdateLandingLocation(Vec2 offset_for_landing_tile)
+void Tile::UpdateLandingLocation(Vec2i offset_for_landing_tile)
 {
     this->landing_location = current_location + offset_for_landing_tile;
 }
 
-bool Tile::IsOffsetPossibleBy(Vec2 offset_location)
+bool Tile::IsOffsetPossibleBy(Vec2i offset_location)
 {
     new_location += offset_location;
 
     return boardController->MoveIsPossible(new_location.x, new_location.y);
 }
 
-bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, Vec2* center_location, Vec2 offset_location)
+bool Tile::IsRotationPossibleBy(bool rotate_clock_wise, Vec2i* center_location, Vec2i offset_location)
 {
-    Vec2 vr;
-    Vec2 vt;
+    Vec2i vr;
+    Vec2i vt;
 
     new_location = current_location;
 
@@ -91,17 +91,17 @@ void Tile::RootMe()
     current_location = landing_location;
 }
 
-Vec2 Tile::GetCurrentLocation()
+Vec2i Tile::GetCurrentLocation()
 {
     return this->current_location;
 }
 
-Vec2* Tile::GetCurrentLocationPtr()
+Vec2i* Tile::GetCurrentLocationPtr()
 {
     return &this->current_location;
 }
 
-const Vec2& Tile::GetLocation() const
+const Vec2i& Tile::GetLocation() const
 {
     return current_location;
 }

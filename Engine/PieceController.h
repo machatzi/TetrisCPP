@@ -20,11 +20,11 @@ enum class PieceShape {
 
 typedef struct OffsetData_s {
     const int number_of_offsets;
-    Vec2 offsets[5][NUMBER_OF_POSSIBLE_ROTATIONS];
+    Vec2i offsets[5][NUMBER_OF_POSSIBLE_ROTATIONS];
 } OffsetData_t;
 
 typedef struct SpawningProperties_s {
-    Vec2 spawn_location;
+    Vec2i spawn_location;
     bool center_rotation_tile = false;
 } SpawningProperties_t;
 
@@ -38,7 +38,7 @@ private:
         int current_rotation_indx = 0;
         const OffsetData_t* offset_data;
         Tile* tiles[TETRAMINO_NUMBER_OF_TILES] = { 0 };
-        Vec2* centered_tile_location_ptr;
+        Vec2i* centered_tile_location_ptr;
     };
 
 public:
@@ -47,7 +47,7 @@ public:
     bool SpawnNextPiece();
     void DrawActivePiece();
     void DrawNextPieces();
-    void DrawPiece(Piece* piece, Vec2 offset, bool draw_landing_piece_as_well) const;
+    void DrawPiece(Piece* piece, Vec2i offset, bool draw_landing_piece_as_well) const;
     void MovePiece(MoveDirection direction);
     void RootPiece();
     void RotatePiece(bool rotate_clockwise);

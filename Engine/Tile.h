@@ -7,26 +7,26 @@
 class Tile
 {
 public:
-    Tile(Graphics& gfx, BoardController* boardController, Vec2 location, int len, Color clr);
+    Tile(Graphics& gfx, BoardController* boardController, Vec2i location, int len, Color clr);
 
-    void DrawMe(bool draw_landing_as_well, Vec2 offset) const;
-    void UpdateLocation(Vec2 new_location);
-    void UpdateLandingLocation(Vec2 offset_for_landing_tile);
-    bool IsOffsetPossibleBy(Vec2 offset_location);
-    bool IsRotationPossibleBy(bool rotate_clock_wise, Vec2* center_location, Vec2 offset_location);
+    void DrawMe(bool draw_landing_as_well, Vec2i offset) const;
+    void UpdateLocation(Vec2i new_location);
+    void UpdateLandingLocation(Vec2i offset_for_landing_tile);
+    bool IsOffsetPossibleBy(Vec2i offset_location);
+    bool IsRotationPossibleBy(bool rotate_clock_wise, Vec2i* center_location, Vec2i offset_location);
     void ResetNewLocation();
     void MoveToNewLocation();
     void RootMe();
-    Vec2 GetCurrentLocation();
-    Vec2* GetCurrentLocationPtr();
-    const Vec2& GetLocation() const;
+    Vec2i GetCurrentLocation();
+    Vec2i* GetCurrentLocationPtr();
+    const Vec2i& GetLocation() const;
 private:
     Graphics& gfx;
     BoardController* boardController;
     int len;
-    Vec2 current_location;
-    Vec2 landing_location;
-    Vec2 new_location;
+    Vec2i current_location;
+    Vec2i landing_location;
+    Vec2i new_location;
     Color clr;
 
     Color SetColor(int x, int y) const;

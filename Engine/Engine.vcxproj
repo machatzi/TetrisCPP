@@ -173,7 +173,6 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="PieceController.cpp" />
-    <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">

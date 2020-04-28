@@ -48,7 +48,7 @@ private:
 
 	/********************************/
 	/*  User Variables              */
-    const Vec2 board_offset_location = { 100, 12 };
+    const Vec2i board_offset_location = { 100, 12 };
     BoardController* boardController;
     PiecesController* piecesController = NULL;
     FrameTimer ft;
