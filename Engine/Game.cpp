@@ -30,7 +30,7 @@ Game::Game(MainWindow& wnd)
     wnd(wnd),
     gfx(wnd)
 {
-    boardController = new BoardController(board_offset_location, board_width_in_rectangles, board_height_in_rectangles, board_square_length_in_pixels);
+    boardController = new BoardController(board_offset_location, board_width_in_rectangles, board_height_in_rectangles, board_square_length_in_pixels, { 13, 7, 7, 20 });
     piecesController = new PiecesController(gfx, boardController);
     board_width_in_pixels = board_width_in_rectangles * board_square_length_in_pixels;
     board_height_in_pixels = board_height_in_rectangles * board_square_length_in_pixels;

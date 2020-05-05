@@ -5,3 +5,10 @@ enum class MoveDirection {
     LEFT,
     DOWN
 };
+
+typedef struct BorderWidths_s {
+    int top;
+    int left;
+    int right;
+    int bottom;
+} BorderWidths_t;

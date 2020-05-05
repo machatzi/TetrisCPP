@@ -3,12 +3,13 @@
 #include "Common.h"
 #include "Sound.h"
 #include "Vec2.h"
+#include "Board.h"
 
-class BoardController
+class BoardController : private Board
 {
 public:
     BoardController() = default;
-    BoardController(Vec2i board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels);
+    BoardController(Vec2i board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels, BorderWidths_t borders_width);
 
     void ClearCompleteLines();
     void DrawBoard( Graphics& gfx );
@@ -31,9 +32,10 @@ private:
     const int board_width_in_rectangles;
     const int board_height_in_rectangles;
     const int board_square_length_in_pixels;
+
     int board_width_in_pixels;
     int board_height_in_pixels;
-    void*** Board = nullptr;
+    void*** TetrisTable = nullptr;
     Sound LineClear;
     Sound TetrisClear;
     
@@ -44,7 +46,7 @@ private:
         { 100, 300 }
     };
 
-    void DrawBoarder( Graphics& gfx );
+    //void DrawBoarder( Graphics& gfx );
     bool LocationIsOccupied(int location_x, int location_y) const;
     bool IsValidLocation(int location_x, int location_y) const;
     bool LineIsComplete(int line_indx) const;

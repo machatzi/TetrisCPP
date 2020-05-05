@@ -1,25 +1,25 @@
 #include "BoardController.h"
 #include "Tile.h"
 
-BoardController::BoardController(Vec2i board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels)
+BoardController::BoardController(Vec2i board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels, BorderWidths_t borders_width)
     :
     boarder_offset_location(board_offset_location),
     board_offset_location( board_offset_location + Vec2i(boarder_width_left,boarder_width_top) ),
     board_width_in_rectangles (board_width_in_rectangles),
     board_height_in_rectangles (board_height_in_rectangles),
-    board_square_length_in_pixels (board_square_length_in_pixels)
+    board_square_length_in_pixels (board_square_length_in_pixels),
+    board_width_in_pixels (board_width_in_rectangles* board_square_length_in_pixels),
+    board_height_in_pixels (board_height_in_rectangles* board_square_length_in_pixels),
+    Board(board_offset_location, Vec2i(borders_width.left, borders_width.top), board_offset_location + Vec2i(board_width_in_rectangles, board_height_in_rectangles)* board_square_length_in_pixels, Vec2i(borders_width.right, borders_width.bottom))
 {
-    Board = new void** [board_width_in_rectangles];
+    TetrisTable = new void** [board_width_in_rectangles];
     for (int i = 0; i < board_width_in_rectangles; ++i) {
-        Board[i] = new void*[board_height_in_rectangles];
+        TetrisTable[i] = new void*[board_height_in_rectangles];
     }
 
     for (int i = 0; i < board_width_in_rectangles; i++)
         for (int z = 0; z < board_height_in_rectangles; z++)
-            Board[i][z] = nullptr;
-
-    board_width_in_pixels = board_width_in_rectangles * board_square_length_in_pixels;
-    board_height_in_pixels = board_height_in_rectangles * board_square_length_in_pixels;
+            TetrisTable[i][z] = nullptr;
 
     LineClear = Sound(L"Media\\line.wav");
     TetrisClear = Sound(L"Media\\se_game_tetris.wav");
@@ -54,7 +54,7 @@ bool BoardController::LineIsEmpty(int y_indx) const
 {
     for (int x = 0; x < board_width_in_rectangles; x++)
     {
-        if (Board[x][y_indx] != nullptr)
+        if (TetrisTable[x][y_indx] != nullptr)
         {
             return false;
         }
@@ -66,7 +66,7 @@ bool BoardController::LineIsComplete(int y_indx) const
 {
     for (int x = 0; x < board_width_in_rectangles; x++)
     {
-        if (Board[x][y_indx] == nullptr)
+        if (TetrisTable[x][y_indx] == nullptr)
         {
             return false;
         }
@@ -78,8 +78,8 @@ void BoardController::RemoveLine(int y_indx)
 {
     for (int x = 0; x < board_width_in_rectangles; x++)
     {
-        delete Board[x][y_indx];
-        Board[x][y_indx] = nullptr;
+        delete TetrisTable[x][y_indx];
+        TetrisTable[x][y_indx] = nullptr;
     }
 }
 
@@ -89,12 +89,12 @@ void BoardController::ShiftLinesDown(int y_indx)
     {
         for (int x = 0; x < board_width_in_rectangles; x++)
         {
-            Board[x][y + 1] = Board[x][y];
+            TetrisTable[x][y + 1] = TetrisTable[x][y];
 
-            if (Board[x][y])
+            if (TetrisTable[x][y])
             {
-                static_cast<Tile*>(Board[x][y])->UpdateLocation(Vec2i(x, y + 1));
-                Board[x][y] = nullptr;
+                static_cast<Tile*>(TetrisTable[x][y])->UpdateLocation(Vec2i(x, y + 1));
+                TetrisTable[x][y] = nullptr;
             }
         }
     }
@@ -108,8 +108,8 @@ void BoardController::DrawBoard( Graphics& gfx )
     {
         for (int y = 0; y < board_height_in_rectangles; y++)
         {
-            if (Board[x][y] != nullptr)
-                static_cast<Tile*>(Board[x][y])->DrawMe(false, board_offset_location);
+            if (TetrisTable[x][y] != nullptr)
+                static_cast<Tile*>(TetrisTable[x][y])->DrawMe(false, board_offset_location);
         }
     }
 }
@@ -123,7 +123,7 @@ void BoardController::StoreTile(void* tile)
 {
     Vec2i position = static_cast<Tile *>(tile)->GetCurrentLocation();
 
-    Board[position.x][position.y] = tile;
+    TetrisTable[position.x][position.y] = tile;
 }
 
 void BoardController::ClearBoard()
@@ -132,10 +132,10 @@ void BoardController::ClearBoard()
     {
         for (int y = 0; y < board_height_in_rectangles; y++)
         {
-            if (Board[x][y] != nullptr)
+            if (TetrisTable[x][y] != nullptr)
             {
-                delete Board[x][y];
-                Board[x][y] = nullptr;
+                delete TetrisTable[x][y];
+                TetrisTable[x][y] = nullptr;
             }
         }
     }
@@ -163,7 +163,7 @@ const Vec2i& BoardController::GetPieceOffset(int indx) const
     return pieces_offset_location[indx];
 }
 
-void BoardController::DrawBoarder(Graphics& gfx)
+/*void BoardController::DrawBoarder(Graphics& gfx)
 {
     // Draw the TOP boarder
     for (int y = boarder_offset_location.y; y <= boarder_offset_location.y + boarder_width_top ; y++)
@@ -192,11 +192,11 @@ void BoardController::DrawBoarder(Graphics& gfx)
         for (int x = start_x; x < start_x + boarder_width_right; x++)
             gfx.PutPixel(x, y, Colors::DarkBlue);
     }
-}
+}*/
 
 bool BoardController::LocationIsOccupied(int location_x, int location_y) const
 {
-    return (Board[location_x][location_y] != nullptr);
+    return (TetrisTable[location_x][location_y] != nullptr);
 }
 
 bool BoardController::IsValidLocation(int location_x, int location_y) const
