@@ -10,7 +10,7 @@ BoardController::BoardController(Vec2i board_offset_location, const int board_wi
     board_square_length_in_pixels (board_square_length_in_pixels),
     board_width_in_pixels (board_width_in_rectangles* board_square_length_in_pixels),
     board_height_in_pixels (board_height_in_rectangles* board_square_length_in_pixels),
-    Board(board_offset_location, Vec2i(borders_width.left, borders_width.top), board_offset_location + Vec2i(board_width_in_rectangles, board_height_in_rectangles)* board_square_length_in_pixels, Vec2i(borders_width.right, borders_width.bottom))
+    Board(board_offset_location, Vec2i(borders_width.left, borders_width.top), board_offset_location + Vec2i(borders_width.left, borders_width.top) + Vec2i(board_width_in_rectangles, board_height_in_rectangles)* board_square_length_in_pixels, Vec2i(borders_width.right, borders_width.bottom))
 {
     TetrisTable = new void** [board_width_in_rectangles];
     for (int i = 0; i < board_width_in_rectangles; ++i) {

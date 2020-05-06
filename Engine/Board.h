@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "Vec2.h"
+#include "Common.h"
 
 class Board
 {
@@ -18,5 +19,7 @@ private:
     Vec2i top_left_in;
     Vec2i bottom_right_in;
     Vec2i bottom_right_out;
+
+    BorderWidths_t borders_width;
 };
 

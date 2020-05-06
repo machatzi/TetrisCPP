@@ -57,6 +57,7 @@ private:
     const int board_square_length_in_pixels = 35;
     const int board_width_in_rectangles = 10;
     const int board_height_in_rectangles = 20;
+    const BorderWidths_t bord_boarder_widths = { 12, 7, 7, 16 };
 
     int board_width_in_pixels;
     int board_height_in_pixels;

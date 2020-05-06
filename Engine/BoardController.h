@@ -5,7 +5,7 @@
 #include "Vec2.h"
 #include "Board.h"
 
-class BoardController : private Board
+class BoardController : public Board
 {
 public:
     BoardController() = default;
