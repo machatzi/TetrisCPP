@@ -4,7 +4,7 @@
 BoardController::BoardController(Vec2i board_offset_location, const int board_width_in_rectangles, const int board_height_in_rectangles, const int board_square_length_in_pixels, BorderWidths_t borders_width)
     :
     boarder_offset_location(board_offset_location),
-    board_offset_location( board_offset_location + Vec2i(boarder_width_left,boarder_width_top) ),
+    board_offset_location( board_offset_location + Vec2i(borders_width.left, borders_width.top) ),
     board_width_in_rectangles (board_width_in_rectangles),
     board_height_in_rectangles (board_height_in_rectangles),
     board_square_length_in_pixels (board_square_length_in_pixels),
@@ -162,37 +162,6 @@ const Vec2i& BoardController::GetPieceOffset(int indx) const
     // TODO: insert return statement here
     return pieces_offset_location[indx];
 }
-
-/*void BoardController::DrawBoarder(Graphics& gfx)
-{
-    // Draw the TOP boarder
-    for (int y = boarder_offset_location.y; y <= boarder_offset_location.y + boarder_width_top ; y++)
-    {
-        for (int x = boarder_offset_location.x; x < boarder_offset_location.x + boarder_width_left + board_width_in_pixels + boarder_width_right; x++)
-            gfx.PutPixel(x, y, Colors::DarkBlue);
-    }
-
-    // Draw the BOTTOM boarder
-    const int start_y = boarder_offset_location.y + boarder_width_top + board_height_in_pixels;
-    for (int y = start_y; y < start_y + boarder_width_bottom; y++)
-    {
-        for (int x = boarder_offset_location.x; x < boarder_offset_location.x + boarder_width_left + board_width_in_pixels + boarder_width_right; x++)
-            gfx.PutPixel(x, y, Colors::DarkBlue);
-    }
-    
-    //DRAW THE SIDE BOARDERS
-    for (int y = boarder_offset_location.y + boarder_width_top; y < start_y; y++)
-    {
-        //LEFT
-        for (int x = boarder_offset_location.x; x < boarder_offset_location.x + boarder_width_left; x++)
-            gfx.PutPixel(x, y, Colors::DarkBlue);
-
-        //RIGHT
-        const int start_x = boarder_offset_location.x + boarder_width_left + board_width_in_pixels;
-        for (int x = start_x; x < start_x + boarder_width_right; x++)
-            gfx.PutPixel(x, y, Colors::DarkBlue);
-    }
-}*/
 
 bool BoardController::LocationIsOccupied(int location_x, int location_y) const
 {

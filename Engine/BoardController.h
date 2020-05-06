@@ -22,11 +22,6 @@ public:
 
     const Vec2i& GetPieceOffset(int indx) const;
 private:
-    const int boarder_width_top = 13;
-    const int boarder_width_left = 7;
-    const int boarder_width_right = 7;
-    const int boarder_width_bottom = 20;
-
     const Vec2i boarder_offset_location;
 
     const int board_width_in_rectangles;

@@ -18,10 +18,5 @@ private:
     Vec2i top_left_in;
     Vec2i bottom_right_in;
     Vec2i bottom_right_out;
-
-    int boarder_width_top = 13;
-    int boarder_width_left = 7;
-    int boarder_width_right = 7;
-    int boarder_width_bottom = 20;
 };
 
